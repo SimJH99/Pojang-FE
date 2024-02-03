@@ -7,8 +7,8 @@
  
   3. 설치가 다 되었으면 VS 에 있는 ![image](https://github.com/Team-SNS/Pojang-FE/assets/43448262/b48dccf8-46b2-43d5-8a15-c4d6bb5a8466) 또는 컨트롤 + 쉬프트 + X 를 눌러 플러그인 설치
      - 플러그인 목록
-       Vue 3 snippets
-       HTML CSS Support
+       Vue 3 snippets,
+       HTML CSS Support,
        volar(Vue Language Features (Volar))
   4. 그 후 깃 클론을 한 후에 해당 파일에 들어가 npm install 설치
   5. 그 후 node_modules 이라는게 설치 되어 있으면 npm run serve 한 다음 아래 사진 처럼 나오면 끝
