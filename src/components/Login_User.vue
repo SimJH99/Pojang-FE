@@ -2,10 +2,10 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded-md shadow-md max-w-md w-full">
       <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">로그인</h2>
-      <form @submit.prevent="login">
+      <form @submit.prevent="doLogin">
         <div class="mb-4">
-          <label for="username" class="block text-sm font-medium text-gray-600">사용자 이름</label>
-          <input v-model="username" type="text" id="username" name="username" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
+          <label for="email" class="block text-sm font-medium text-gray-600">사용자 이름</label>
+          <input v-model="email" type="email" id="email" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
         <div class="mb-6">
           <label for="password" class="block text-sm font-medium text-gray-600">비밀번호</label>
@@ -24,20 +24,46 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
+
 export default {
-  data() {
-    return {
-      username: '',
-      password: ''
-    };
-  },
-  methods: {
-    login() {
-      // 로그인 로직을 여기에 추가
-      console.log('로그인 시도:', this.username, this.password);
-    }
-  }
-};
+    data(){
+        return{
+            email: "",
+            password: ""
+        }
+    },
+    methods: {
+        async doLogin(){
+            try{
+                const loginData = {email: this.email, password: this.password};
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/members/login`, loginData);
+                const token = response.data.result.token;
+                console.log(token);
+                if(token){
+                    const decoded = jwtDecode(token);
+                    console.log(decoded);
+                    localStorage.setItem("role", decoded.role);
+                    localStorage.setItem("token", token);
+                    window.location.href = "/";
+                } else{
+                    console.log("200 ok but not token");
+                    alert("Login Failed");
+                }
+            } catch(error){
+                const error_message = error.response.data.error_message;
+                if(error_message){
+                    console.log(error_message);
+                    alert(error_message);
+                } else{
+                    console.log(error);
+                    alert("Login Failed")
+                } 
+            }
+        }
+    },
+}
 </script>
 
 <style scoped>
