@@ -9,6 +9,7 @@ import ReviewList from '@/components/ReviewList.vue';
 import MenuList from '@/components/MenuList.vue';
 
 import SignUpUserComponent from '@/components/Signup_User.vue';
+import SignUpOwnerComponent from '@/components/Signup_Owner.vue';
 const routes = [
   {path:'/' , name: 'HOME' , component: HomeComponent},
   {path:'/login' , name: 'Login' , component: LoginComponent},
@@ -20,6 +21,7 @@ const routes = [
   {path:'/store' , name: 'Store' , component: StoreDetailComponent},
   {path:'/myOrderList' , name: 'MyOrderList' , component: MyOrderListComponent},
   {path:'/sign-up-user' , name: 'sign-up-user' , component: SignUpUserComponent},
+  {path:'/sign-up-owner' , name: 'sign-up-owner' , component: SignUpOwnerComponent},
 ]
 const router = createRouter({
   history: createWebHistory(),
