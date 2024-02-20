@@ -63,18 +63,6 @@ export default {
   data() {
     return {
       store: {},
-      // store: {
-      //   businessHours: "09:00 - 00:00",
-      //   phone: "05079727736 (요기요 제공 번호)",
-      //   address: "제주특별자치도 제주시 노형동 904-4 1층",
-      //   paymentMethod: "요기서결제",
-      //   businessName: "(주)비케이알",
-      //   businessNumber: "101-86-76277",
-      //   image: "C:/Users/Playdata/Desktop/pojang_image/apple.jpg",
-      //   name: "홍콩반점",
-      //   rating: 4.5,
-      //   likes: 100
-      // },
       tabs: ['메뉴', '리뷰', '정보'],
       tab: '메뉴',
     };
