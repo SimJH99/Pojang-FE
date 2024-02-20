@@ -1,9 +1,11 @@
 <template>
-    <li v-for="review in reviewList" :key="review.id" class="review-item mt-4 border-b pb-4">
-        <div class="review-author text-lg font-bold">{{ review.nickname }}</div>
-        <div class="review-rating text-sm text-yellow-500 mt-1">별점: {{ review.rating }}</div>
-        <div class="review-content text-sm text-gray-500 mt-2">{{ review.contents }}</div>
-    </li>
+    <li v-for="menu in menuList" :key="menu.id" class="menu-item flex mt-4 border-b pb-4">
+        <img :src="getImage(menu.id)" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
+        <div class="menu-info ml-4">
+          <h4 class="menu-name text-lg font-bold">{{ menu.menuName }}</h4>
+          <div class="menu-price text-sm text-gray-500 mt-1">{{ menu.price }}원</div>
+        </div>
+      </li>
 </template>
 
 <script>
@@ -11,7 +13,7 @@ import axios from 'axios';
 export default {
     data () {
         return {
-            reviewList: [],
+            menuList: [],
              // 페이징 처리
              pageSize: 10, // 20개씩 보여줌
             currentPage: 0,
@@ -23,43 +25,22 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/reviews`);
-            this.reviewList = response.data.result;
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/menus`);
+            this.menuList = response.data.result;
         }catch(error) {
             console.log(error);
         }
     },
     mounted() {
+        
         // 무한 스크롤 : scroll 동작이 발생할 때마다 scrollPagination함수가 호출됨
         // window.addEventListener('scroll', this.scrollPagination);
     }, 
-    // methods: {
-    //     // async loadReview() {
-    //     //     this.isLoading = true;
-    //         // try {
-    //             // params 객체 생성 : url 추가 시 자동으로 파라미터 형식으로 보내짐
-    //             // const params = {
-    //             //     page: this.currentPage,
-    //             //     size: this.pageSize,
-    //             //     // [] : [] 안의 값을 꺼냄
-    //             //     // [this.searchType]: this.serchValue
-    //             // }
-                
-    //             // console.log("data호출");
-    //             // const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/reviews`);
-    //             // const addreviewList = response.data.map(review=>({...review, quantity:1}));
-    //             // 마지막 페이지인지 확인 - 더 이상 api호출 안하도록
-    //             // if(addreviewList.length < this.pageSize) {
-    //             //     this.isLastPage = true;
-    //             // }
-    //         //     this.reviewList = response.data;
-    //         //     // this.reviewList = [...this.reviewList, ...addreviewList];
-    //         // }catch(error) {
-    //         //     console.log(error);
-    //         // }
-    //         // this.isLoading = false;
-    //     }
-    // }
+    methods: {
+        getImage(id) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/1/menus/${id}/image`;
+        }
+    }
 }
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="store-info p-4 bg-gray-100 rounded-lg shadow-md">
     <div class="store-header flex items-center">
-      <img :src="store.image" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
+      <img :src="getImage(store.id)" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
       <div class="store-info-text ml-4">
         <h2 class="store-name text-2xl font-bold">{{ store.name }}</h2>
         <div class="rating text-sm text-gray-500 mt-2 flex items-center">
-          별점: <span class="font-bold text-yellow-500">{{ store.rating }}</span>
+          별점: <span class="font-bold text-yellow-500">{{ store.avgRating }}</span>
         </div>
         <div class="likes text-sm text-gray-500 mt-1 flex items-center">
           찜 수: <span class="font-bold text-red-500">{{ store.likes }}</span>
@@ -27,34 +27,23 @@
 
     <div v-if="tab === '메뉴'" class="bg-white p-4 shadow-md">
       <ul class="mt-4">
-        <li v-for="menu in store.menuList" :key="menu.id" class="menu-item flex mt-4 border-b pb-4">
-          <img :src="menu.image" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
-          <div class="menu-info ml-4">
-            <h4 class="menu-name text-lg font-bold">{{ menu.name }}</h4>
-            <div class="menu-price text-sm text-gray-500 mt-1">{{ menu.price }}원</div>
-          </div>
-        </li>
+        <MenuListComponent/>
       </ul>
     </div>
 
     <div v-if="tab === '리뷰'" class="bg-white p-4 shadow-md">
-      <ul>
         <ReviewListComponent/>
-      </ul>
     </div>
 
     <div v-if="tab === '정보'" class="bg-white p-4 shadow-md">
       <div class="info-list">
         <h3 class="info-title text-lg font-bold">업체 정보</h3>
-        <div class="info-item mt-2">영업시간: {{ store.businessHours }}</div>
-        <div class="info-item">전화번호: {{ store.phone }}</div>
+        <div class="info-item mt-2">영업시간: {{ store.operationTime }}</div>
+        <div class="info-item">전화번호: {{ store.storeNumber }}</div>
         <div class="info-item">주소: {{ store.address }}</div>
-        <!-- <div id="map" style="width:100%;height:380px;"/>        -->
-        <h3 class="info-title text-lg font-bold mt-4">결제 정보</h3>
-        <div class="info-item">결제수단: {{ store.paymentMethod }}</div>
-  
+        <!-- <div id="map" style="width:100%;height:380px;"/>        -->  
         <h3 class="info-title text-lg font-bold mt-4">사업자 정보</h3>
-        <div class="info-item mt-2">상호명: {{ store.businessName }}</div>
+        <div class="info-item mt-2">상호명: {{ store.name }}</div>
         <div class="info-item">사업자등록번호: {{ store.businessNumber }}</div>
       </div>
     </div>
@@ -63,41 +52,49 @@
 
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import ReviewListComponent from '@/components/ReviewList.vue';
+import MenuListComponent from '@/components/MenuList.vue';
 export default {
   components:{ 
-        ReviewListComponent
+        ReviewListComponent,
+        MenuListComponent
     },
   data() {
     return {
-      store: {
-        businessHours: "09:00 - 00:00",
-        phone: "05079727736 (요기요 제공 번호)",
-        address: "제주특별자치도 제주시 노형동 904-4 1층",
-        paymentMethod: "요기서결제",
-        businessName: "(주)비케이알",
-        businessNumber: "101-86-76277",
-        image: "C:/Users/Playdata/Desktop/pojang_image/apple.jpg",
-        name: "홍콩반점",
-        rating: 4.5,
-        likes: 100,
-        menuList: [
-          { id: 1, name: "짜장", price: 10000, image: "C:/Users/Playdata/Desktop/pojang_image/apple" },
-          { id: 2, name: "짬뽕", price: 12000, image: "C:/Users/Playdata/Desktop/pojang_image/apple" },
-          { id: 3, name: "우동", price: 15000, image: "C:/Users/Playdata/Desktop/pojang_image/apple" },
-          // 메뉴들을 필요한 만큼 추가할 수 있습니다.
-        ],
-        reviews: [
-          { id: 1, author: "작성자1", rating: 4.5, content: "리뷰 내용1" },
-          { id: 2, author: "작성자2", rating: 4.0, content: "리뷰 내용2" },
-          { id: 3, author: "작성자3", rating: 5.0, content: "리뷰 내용3" },
-        ]  
-      },
+      store: {},
+      // store: {
+      //   businessHours: "09:00 - 00:00",
+      //   phone: "05079727736 (요기요 제공 번호)",
+      //   address: "제주특별자치도 제주시 노형동 904-4 1층",
+      //   paymentMethod: "요기서결제",
+      //   businessName: "(주)비케이알",
+      //   businessNumber: "101-86-76277",
+      //   image: "C:/Users/Playdata/Desktop/pojang_image/apple.jpg",
+      //   name: "홍콩반점",
+      //   rating: 4.5,
+      //   likes: 100
+      // },
       tabs: ['메뉴', '리뷰', '정보'],
       tab: '메뉴',
     };
   },
+  created() {
+    this.fetchStore();
+  },
+  methods: {
+        async fetchStore() {
+            try {
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/details`);
+            this.store = response.data.result;
+            }catch(error) {
+                console.log(error);
+            }       
+        },
+        getImage(id) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
+        },
+    },
   // mounted() {
   //   if (window.kakao && window.kakao.maps) {
   //     this.initMap();

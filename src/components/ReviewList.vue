@@ -1,9 +1,12 @@
 <template>
-    <li v-for="review in reviewList" :key="review.id" class="review-item mt-4 border-b pb-4">
-        <div class="review-author text-lg font-bold">{{ review.nickname }}</div>
-        <div class="review-rating text-sm text-yellow-500 mt-1">별점: {{ review.rating }}</div>
-        <div class="review-content text-sm text-gray-500 mt-2">{{ review.contents }}</div>
-    </li>
+    <ul>
+        <li v-for="review in reviewList" :key="review.id" class="review-item mt-4 border-b pb-4">
+            <div class="review-author text-lg font-bold">{{ review.nickname }}</div>
+            <div class="review-rating text-sm text-yellow-500 mt-1">별점: {{ review.rating }}</div>
+            <img v-if="review.imageUrl" :src="getImage(review.id)" alt="리뷰 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
+            <div class="review-content text-sm text-gray-500 mt-2">{{ review.contents }}</div>
+        </li>
+    </ul>
 </template>
 
 <script>
@@ -30,36 +33,13 @@ export default {
         }
     },
     mounted() {
-        // 무한 스크롤 : scroll 동작이 발생할 때마다 scrollPagination함수가 호출됨
-        // window.addEventListener('scroll', this.scrollPagination);
+
     }, 
-    // methods: {
-    //     // async loadReview() {
-    //     //     this.isLoading = true;
-    //         // try {
-    //             // params 객체 생성 : url 추가 시 자동으로 파라미터 형식으로 보내짐
-    //             // const params = {
-    //             //     page: this.currentPage,
-    //             //     size: this.pageSize,
-    //             //     // [] : [] 안의 값을 꺼냄
-    //             //     // [this.searchType]: this.serchValue
-    //             // }
-                
-    //             // console.log("data호출");
-    //             // const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/reviews`);
-    //             // const addreviewList = response.data.map(review=>({...review, quantity:1}));
-    //             // 마지막 페이지인지 확인 - 더 이상 api호출 안하도록
-    //             // if(addreviewList.length < this.pageSize) {
-    //             //     this.isLastPage = true;
-    //             // }
-    //         //     this.reviewList = response.data;
-    //         //     // this.reviewList = [...this.reviewList, ...addreviewList];
-    //         // }catch(error) {
-    //         //     console.log(error);
-    //         // }
-    //         // this.isLoading = false;
-    //     }
-    // }
+    methods: {
+        getImage(id) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/orders/${id}/reviews/image`;
+        }
+    }
 }
 </script>
 
