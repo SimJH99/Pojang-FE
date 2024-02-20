@@ -5,7 +5,7 @@
       <div class="flex items-center space-x-10">
           <div class="grid-cols-4 col-span-4">
             <router-link to="/">
-                <h1 class="text-slate-50 font-serif text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
+                <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
             </router-link>
           </div>
       </div>
