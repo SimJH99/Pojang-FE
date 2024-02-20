@@ -39,11 +39,7 @@
 
     <div v-if="tab === '리뷰'" class="bg-white p-4 shadow-md">
       <ul>
-        <li v-for="review in store.reviews" :key="review.id" class="review-item mt-4 border-b pb-4">
-          <div class="review-author text-lg font-bold">{{ review.author }}</div>
-          <div class="review-rating text-sm text-yellow-500 mt-1">별점: {{ review.rating }}</div>
-          <div class="review-content text-sm text-gray-500 mt-2">{{ review.content }}</div>
-        </li>
+        <ReviewListComponent/>
       </ul>
     </div>
 
@@ -67,7 +63,12 @@
 
 
 <script>
+// import axios from 'axios';
+import ReviewListComponent from '@/components/ReviewList.vue';
 export default {
+  components:{ 
+        ReviewListComponent
+    },
   data() {
     return {
       store: {
