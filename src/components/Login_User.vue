@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded-md shadow-md max-w-md w-full">
       <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">로그인</h2>
       <form @submit.prevent="doLogin">
         <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-600">사용자 이름</label>
+          <label for="email" class="block text-sm font-medium text-gray-600">이메일</label>
           <input v-model="email" type="email" id="email" name="email" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
         <div class="mb-6">
@@ -23,6 +23,9 @@
         </div>
       </form>
     </div>
+    <div class="text-sm text-gray-600 mt-2">
+      <a href="/sign-up-owner" class="hover:underline">사장님 회원가입</a>
+    </div>
   </div>
 </template>
 
@@ -33,12 +36,20 @@ import {jwtDecode} from 'jwt-decode';
 export default {
     data(){
         return{
-            email: "",
-            password: ""
+            email: '',
+            password: ''
         }
     },
     methods: {
         async doLogin(){
+            if (!this.email) {
+              alert('이메일 주소를 입력하세요.');
+              return;
+            }
+            if (!this.password) {
+              alert('비밀번호를 입력하세요.');
+              return;
+            }
             try{
                 const loginData = {email: this.email, password: this.password};
                 const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/members/login`, loginData);
