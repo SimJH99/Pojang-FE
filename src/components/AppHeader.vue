@@ -13,7 +13,7 @@
         <a v-if="isLogin" href="/my-info" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8">마이페이지</a>
         <router-link v-bind:to="`/login`"><button v-if="!isLogin" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8" >로그인</button></router-link>
         <button v-if="isLogin" @click="doLogout" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8" >로그아웃</button>
-        <button class="rounded-md text-slate-50 bg-orange-500 p-2 px-8">주문표(0)</button>
+        <a v-if="isLogin" href="/cart" class="rounded-md text-slate-50 bg-orange-500 p-2 px-8">주문표({{ getTotalQuantity }})</a>
       </div>
   </div>
 </div>
@@ -23,7 +23,11 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 export default {
+    computed: {
+        ...mapGetters(['getTotalQuantity'])
+    },
     data(){
         return {
             isLogin: false, 
