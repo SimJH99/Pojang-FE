@@ -70,6 +70,7 @@
                       @click="rating = star"
                       :class="star <= rating ? 'text-yellow-500' : 'text-gray-300'"
                       role="button" tabindex="0"
+                      style="font-size: 2em; background: none; border: none;"
                     >
                       ★
                     </span>      
@@ -146,6 +147,7 @@ export default {
     },
     onFileChange(event) {
       this.image = event.target.files[0];
+      console.log(this.image);
     },
     async checkReview(orderId) {
       const token = localStorage.getItem('token');
@@ -170,8 +172,7 @@ export default {
         const headers = {Authorization: `Bearer ${token}`} 
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/orders/${this.orderId}/reviews`, registerData, {headers});
         alert("리뷰작성 완료");
-        window.location.reload();
-        // this.$router.push("/items/manage");
+        // window.location.reload();
       }catch(error){
           alert('리뷰작성 실패');
       }
@@ -180,10 +181,3 @@ export default {
 };
 </script>
 
-<style scoped>
-button .star{
-  font-size: 2em;
-  background: none;
-  border: none;
-}
-</style>
