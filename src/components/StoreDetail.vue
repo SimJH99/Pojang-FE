@@ -73,7 +73,7 @@ export default {
   methods: {
         async fetchStore() {
             try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/details`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/details`);
             this.store = response.data.result;
             }catch(error) {
                 console.log(error);
