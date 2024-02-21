@@ -173,8 +173,6 @@
         } catch(error){
           alert('회원가입 실패');
         }
-        // 여기에 폼 제출 로직 추가
-        console.log('폼이 제출되었습니다.');
       },
         validatePhoneNumber() {
         const phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
