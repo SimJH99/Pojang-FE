@@ -6,7 +6,7 @@
                 <li class="text-lg font-bold mb-2"><a href="/my-info-owner">내 정보</a></li>
                 <li class="text-lg font-bold mb-2"><a href="/my-info-update">내 정보 수정</a></li>
                 <li class="text-lg font-bold mb-2"><a href="/store-create">매장 등록</a></li>
-                <li class="text-lg font-bold mb-2"><a href="/my-stores">내 가게</a></li>
+                <li class="text-lg font-bold mb-2"><a href="/my-stores">내 매장리스트</a></li>
             </ul>
         </div>
         <div class="w-5/6 p-8 flex flex-col">
@@ -44,14 +44,14 @@
                   </div>
                   <label class="block text-lg font-bold text-gray-600 mt-4">카테고리</label>
                   <select v-model="category" class="mt-1 p-3 border rounded-md w-full">
-                      <option value="option1">치킨</option>
-                      <option value="option2">피자</option>
-                      <option value="option3">중식</option>
-                      <option value="option4">한식</option>
-                      <option value="option5">일식</option>
-                      <option value="option6">야식</option>
-                      <option value="option7">양식</option>
-                      <option value="option8">분식</option>
+                      <option value="치킨">치킨</option>
+                      <option value="피자">피자</option>
+                      <option value="중식">중식</option>
+                      <option value="한식">한식</option>
+                      <option value="일식">일식</option>
+                      <option value="야식">야식</option>
+                      <option value="양식">양식</option>
+                      <option value="분식">분식</option>
                       <!-- 필요에 따라 추가적인 옵션을 나열하세요 -->
                   </select>
 
@@ -137,6 +137,5 @@ export default {
 form {
     width: 100%; /* 폼의 너비를 100%로 설정하여 화면에 꽉 차도록 함 */
     max-width: 800px; /* 최대 너비를 지정하여 너무 커지지 않도록 함 */
-    min-width: 800px;
   }
 </style>

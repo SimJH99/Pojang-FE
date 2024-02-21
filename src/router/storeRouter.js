@@ -1,8 +1,9 @@
 import MyInfoOwner from '@/views/Store/MyInfoOwner';
 import MyStores from '@/views/Store/MyStores';
-import MyStoreInfo from '@/views/Store/MyStoreInfo';
 import MyInfoUpdate from '@/views/Store/MyInfoUpdate';
+import MyStoreInfo from '@/views/Store/MyStoreInfo';
 import StoreCreate from '@/views/Store/StoreCreate';
+import StoreUpdate from '@/views/Store/StoreUpdate';
 
 export const storeRoutes = [
     {
@@ -16,9 +17,10 @@ export const storeRoutes = [
         component: MyStores,
     },
     {
-        path: '/my-store-info',
+        path: '/:id/my-store-info',
         name: 'MyStoreInfo',
         component: MyStoreInfo,
+        props: true,
     },
     {
         path: '/my-info-update',
@@ -29,5 +31,10 @@ export const storeRoutes = [
         path: '/store-create',
         name: 'StoreCreate',
         component: StoreCreate,
+    },
+    {
+        path: '/store-update',
+        name: 'StoreUpdate',
+        component: StoreUpdate,
     },
 ];
