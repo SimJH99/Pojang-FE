@@ -3,7 +3,7 @@ import {createRouter,createWebHistory} from 'vue-router';
 import HomeComponent from '@/views/StoreCategories.vue';
 import LoginComponent from '@/components/Login_User.vue';
 import UpdateMyInfoComponent from '@/components/UpdateMyInfo.vue';
-import StoreDetailComponent from '@/components/StoreDetail.vue';
+import StoreDetailComponent from '@/components/StoreDetail.vue'; 
 import ReviewList from '@/components/ReviewList.vue';
 import MenuList from '@/components/MenuList.vue';
 import SignUpUserComponent from '@/components/Signup_User.vue';
