@@ -3,20 +3,19 @@
     <!-- 왼쪽 사이드바 -->
     <div class="w-1/6 bg-white p-4">
       <ul>
-        <li class="text-lg font-bold mb-2"><a href="/my-info">내 정보</a></li>
-        <li class="text-lg font-bold mb-2"><a href="/my-orders">주문 내역</a></li>
-        <li class="text-lg font-bold mb-2"><a href="/my-favorite">찜 목록</a></li>
-        <li class="text-lg font-bold mb-2"><a href="/my-review">리뷰 목록</a></li>
-        <li class="text-lg font-bold mb-2"><a href="/update/myinfo/">정보 수정</a></li>
-        <!-- 추가적인 카테고리 항목들을 필요에 따라 나열하세요 -->
+          <li class="text-lg font-bold mb-2"><a href="/my-info-owner">내 정보</a></li>
+          <li class="text-lg font-bold mb-2"><a href="/my-info-update">내 정보 수정</a></li>
+          <li class="text-lg font-bold mb-2"><a href="/store-create">매장 등록</a></li>
+          <li class="text-lg font-bold mb-2"><a href="/my-stores">내 매장리스트</a></li>
+          <!-- 추가적인 카테고리 항목들을 필요에 따라 나열하세요 -->
       </ul>
-    </div>
+  </div>
 
     <!-- 오른쪽 컨텐츠 영역 -->
     <div class="w-5/6 p-8 flex flex-col">
       <!-- 내 정보 -->
       <div v-if="true">
-        <h2 class="text-3xl font-semibold mb-6 text-gray-800">내 정보</h2>
+        <h2 class="text-3xl font-semibold mb-6 text-gray-800">사장님 정보</h2>
         <div class="mb-4 bg-white p-4 rounded-md flex flex-col">
           <div>
             <label class="block text-lg font-bold text-gray-600">닉네임</label>

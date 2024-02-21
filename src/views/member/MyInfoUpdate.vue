@@ -1,4 +1,5 @@
 <template>
+  <h3>dfdf</h3>
   <div class="min-h-screen flex bg-gray-100">
     <!-- 왼쪽 사이드바 -->
     <div class="w-1/6 bg-white p-4">
@@ -15,34 +16,26 @@
     <!-- 오른쪽 컨텐츠 영역 -->
     <div class="w-5/6 p-8 flex flex-col">
       <!-- 내 정보 -->
-      <div v-if="true">
-        <h2 class="text-3xl font-semibold mb-6 text-gray-800">내 정보</h2>
-        <div class="mb-4 bg-white p-4 rounded-md flex flex-col">
-          <div>
+      <div class="w-5/6 p-8">
+        <h2 class="text-3xl font-semibold mb-6 text-gray-800">프로필 수정</h2>
+        <form @submit.prevent="submitProfile">
+          <div class="bg-white p-4 rounded-md">
             <label class="block text-lg font-bold text-gray-600">닉네임</label>
-            <div class="mt-1 p-3 border-2 rounded-md">
-              {{ memberInfo.nickName }}
-            </div>
+            <input v-model="editedProfile.nickname" type="text" class="mt-1 p-3 border rounded-md w-full">
+            <label class="block text-lg font-bold text-gray-600 mt-4">이메일</label>
+            <input v-model="editedProfile.email" type="email" class="mt-1 p-3 border rounded-md w-full" disabled>
+            <!-- 이메일은 수정 불가능하도록 disabled 속성 추가 -->
+            <label class="block text-lg font-bold text-gray-600 mt-4">주소</label>
+            <input v-model="editedProfile.address" type="text" class="mt-1 p-3 border rounded-md w-full">
+            <label class="block text-lg font-bold text-gray-600 mt-4">휴대폰번호</label>
+            <input v-model="editedProfile.phone" type="tel" class="mt-1 p-3 border rounded-md w-full">
+            <label class="block text-lg font-bold text-gray-600 mt-4">비밀번호</label>
+            <input v-model="editedProfile.password" type="password" class="mt-1 p-3 border rounded-md w-full">
+            <button type="submit" class="bg-black text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800">
+              저장
+            </button>
           </div>
-          <div>
-            <label class="block text-lg font-bold text-gray-600">이메일</label>
-            <div class="mt-1 p-3 border-2 rounded-md">
-              {{ memberInfo.email }}
-            </div>
-          </div>
-          <div>
-            <label class="block text-lg font-bold text-gray-600">주소</label>
-            <div class="mt-1 p-3 border-2 rounded-md">
-              {{ memberInfo.address }}
-            </div>
-          </div>
-          <div>
-            <label class="block text-lg font-bold text-gray-600">휴대폰번호</label>
-            <div class="mt-1 p-3 border-2 rounded-md">
-              {{ memberInfo.phoneNumber }}
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -65,6 +58,7 @@ export default {
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/members/my-info`, { headers });
         this.memberInfo = response.data.result;
+        console.log(this.memberInfo);
       } catch (error) {
         console.log(error);
       }

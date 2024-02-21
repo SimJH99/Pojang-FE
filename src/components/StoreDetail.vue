@@ -4,12 +4,18 @@
       <img :src="getImage(store.id)" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
       <div class="store-info-text ml-4">
         <h2 class="store-name text-2xl font-bold">{{ store.name }}</h2>
-        <div class="rating text-sm text-gray-500 mt-2 flex items-center">
-          별점: <span class="font-bold text-yellow-500">{{ store.avgRating }}</span>
+        <div class="rating text-sm text-gray-500 mt-2 flex items-center" style="font-size: 1.5em; background: none; border: none;">
+          <span class="font-bold text-yellow-500">★</span> 
+          <span v-if="store.avgRating != 'NaN'" class="font-bold text-yellow-500">{{ store.avgRating }}</span>
+          <span v-else class="font-bold text-gray-500" style="font-size: 0.8em;">등록된 리뷰가 없습니다.</span>
+
+        </div> 
+        <div class="likes text-sm text-gray-500 mt-1 flex items-center" style="font-size: 1.5em; background: none; border: none;">
+          <button @click="toggleLike" :class="isLike ? 'font-bold text-red-500' : 'font-bold text-gray-500'"
+        >♥</button>
+          <span class="font-bold text-red-500">{{ store.likes }}</span>
         </div>
-        <div class="likes text-sm text-gray-500 mt-1 flex items-center">
-          찜 수: <span class="font-bold text-red-500">{{ store.likes }}</span>
-        </div>
+        <div>프롭스 :  {{ $route.params.id }}</div>
       </div>
     </div>
     
@@ -56,6 +62,11 @@ import axios from 'axios';
 import ReviewListComponent from '@/components/ReviewList.vue';
 import MenuListComponent from '@/components/MenuList.vue';
 export default {
+  props: {
+            id: {
+                type: String,
+            }
+          },
   components:{ 
         ReviewListComponent,
         MenuListComponent
@@ -65,23 +76,59 @@ export default {
       store: {},
       tabs: ['메뉴', '리뷰', '정보'],
       tab: '메뉴',
+      isLike: null,
     };
   },
   created() {
     this.fetchStore();
+    this.fetchLike();
   },
   methods: {
         async fetchStore() {
             try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/details`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`);
             this.store = response.data.result;
             }catch(error) {
                 console.log(error);
             }       
         },
+        async fetchLike() {
+          try {
+            const token = localStorage.getItem('token');
+            const headers = { Authorization: `Bearer ${token}` };
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/favorite`, { headers });
+            this.isLike = response.data;
+            }catch(error) {
+                console.log(error);
+            } 
+        },
         getImage(id) {
             return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
         },
+        async setLike() {
+          const token = localStorage.getItem('token');
+          const headers = {Authorization: `Bearer ${token}`} 
+          await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.store.id}/favorites`, {},{headers});
+          this.isLike = true;
+          alert(`${this.store.name}을 찜했습니다.`);
+          this.store.likes += 1;
+        },
+        async cancelLike() {
+          const token = localStorage.getItem('token');
+          const headers = {Authorization: `Bearer ${token}`} 
+          await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.store.id}/favorites`, {headers});
+          alert(`${this.store.name}을 찜 취소했습니다.`);
+          this.isLike = false;
+          this.store.likes -= 1;
+        },
+        toggleLike() {
+          if (this.isLike) {
+            this.cancelLike();
+          } else {
+            this.setLike();
+          }
+        },
+
     },
   // mounted() {
   //   if (window.kakao && window.kakao.maps) {

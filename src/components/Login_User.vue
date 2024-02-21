@@ -2,19 +2,19 @@
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded-md shadow-md max-w-md w-full">
       <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">로그인</h2>
-      <form @submit.prevent="doLogin">
+      <form @submit.prevent="doLogin" class="w-full">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-600">이메일</label>
-          <input v-model="email" type="email" id="email" name="email" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
+          <input v-model="email" type="email" id="email" name="email" class="mt-1 p-3 w-1/2 border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
         <div class="mb-6">
           <label for="password" class="block text-sm font-medium text-gray-600">비밀번호</label>
-          <input v-model="password" type="password" id="password" name="password" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
+          <input v-model="password" type="password" id="password" name="password" class="mt-1 p-3 w-1/2 border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
-        <button type="submit" class="bg-black text-white px-4 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800 w-full">
+        <button type="submit" class="bg-black text-white px-4 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800 w-1/2">
           로그인
         </button>
-        <div class="mt-4 flex items-center justify-end space-x-4">
+        <div class="mt-4 flex w-1/2 items-center justify-end space-x-4">
           <a href="/sign-up-user" class="text-sm text-gray-600 hover:underline text-left">회원가입</a>
           <span class="text-sm text-gray-600">|</span>
           <a href="#" class="text-sm text-gray-600 hover:underline">아이디 찾기</a>

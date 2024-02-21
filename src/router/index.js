@@ -1,8 +1,9 @@
 import {createRouter,createWebHistory} from 'vue-router';
-import HomeComponent from '@/components/HomeComponent.vue';
+// import HomeComponent from '@/components/HomeComponent.vue';
+import HomeComponent from '@/views/StoreCategories.vue';
 import LoginComponent from '@/components/Login_User.vue';
 import UpdateMyInfoComponent from '@/components/UpdateMyInfo.vue';
-import StoreDetailComponent from '@/components/StoreDetail.vue';
+import StoreDetailComponent from '@/components/StoreDetail.vue'; 
 import ReviewList from '@/components/ReviewList.vue';
 import MenuList from '@/components/MenuList.vue';
 import SignUpUserComponent from '@/components/Signup_User.vue';
@@ -20,7 +21,7 @@ const routes = [
   {path:'/update/myinfo' , name: 'UpdateMyInfo' , component: UpdateMyInfoComponent},
   {path:'/menu' , name: 'Menu' , component: MenuList},
   {path:'/review' , name: 'Review' , component: ReviewList},
-  {path:'/store' , name: 'Store' , component: StoreDetailComponent},
+  {path:'/:id/store' , name: 'Store' , component: StoreDetailComponent, props: true},
   {path:'/sign-up-user' , name: 'sign-up-user' , component: SignUpUserComponent},
   {path:'/sign-up-owner' , name: 'sign-up-owner' , component: SignUpOwnerComponent},
   ...memberRoutes,
