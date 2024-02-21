@@ -17,11 +17,14 @@
       <h2 class="text-3xl font-semibold mb-6 text-gray-800">찜 목록</h2>
       <div v-if="favorites.length > 0" class="bg-white p-4 rounded-md">
         <ul>
-          <li v-for="favorite in favorites" :key="favorite.id" class="mb-2">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">찜 번호: {{ favorite.id }}</h3>
-            <p class="text-gray-600">찜한 가게: {{ favorite.store }}</p>
-            <p class="text-gray-600">가게 카테고리: {{ favorite.category }}</p>
-            <p class="text-gray-600">가게 상태: {{ order.orderStatus }}</p>
+          <li v-for="favorite in favorites" class="mb-2" :key="favorite.id">
+            <img :src="getImage(favorite.storeId)" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
+            <!-- <h3 class="text-xl font-semibold text-gray-800 mb-2">찜 번호: {{ favorite.id }}</h3> -->
+            <div>
+              <p class="text-gray-600">{{ favorite.storeName }}</p>
+              <p class="text-gray-600">{{ favorite.category }}</p>
+              <p class="text-gray-600">{{ favorite.storeStatus }}</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -30,6 +33,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 <script>
 import axios from 'axios';
@@ -53,6 +57,9 @@ export default {
         console.log(error);
       }
     },
+    getImage(id) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
+        },
   },
 };
 </script>
