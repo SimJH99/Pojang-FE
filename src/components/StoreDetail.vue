@@ -6,7 +6,9 @@
         <h2 class="store-name text-2xl font-bold">{{ store.name }}</h2>
         <div class="rating text-sm text-gray-500 mt-2 flex items-center" style="font-size: 1.5em; background: none; border: none;">
           <span class="font-bold text-yellow-500">★</span> 
-          <span class="font-bold text-yellow-500">{{ store.avgRating }}</span>
+          <span v-if="store.avgRating != 'NaN'" class="font-bold text-yellow-500">{{ store.avgRating }}</span>
+          <span v-else class="font-bold text-gray-500" style="font-size: 0.8em;">등록된 리뷰가 없습니다.</span>
+
         </div> 
         <div class="likes text-sm text-gray-500 mt-1 flex items-center" style="font-size: 1.5em; background: none; border: none;">
           <button @click="toggleLike" :class="isLike ? 'font-bold text-red-500' : 'font-bold text-gray-500'"

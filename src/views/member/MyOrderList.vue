@@ -172,7 +172,7 @@ export default {
         const headers = {Authorization: `Bearer ${token}`} 
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/orders/${this.orderId}/reviews`, registerData, {headers});
         alert("리뷰작성 완료");
-        // window.location.reload();
+        window.location.reload();
       }catch(error){
           alert('리뷰작성 실패');
       }
