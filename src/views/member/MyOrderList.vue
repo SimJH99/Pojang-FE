@@ -124,12 +124,9 @@ export default {
         const orders = response.data.result;
 
         for(let order of orders) {
-          const token = localStorage.getItem('token');
-          const headers = { Authorization: `Bearer ${token}` };
-          const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/orders/${order.orderId}/reviews`, { headers });
+          const reviewResponse = await this.checkReview(order.orderId);
           // 리뷰가 있으면 true, 없으면 false
-          order.hasReview = !!response.data;
-          console.log(order.hasReview, order.orderId);
+          order.hasReview = !!reviewResponse;
         }
         this.orders = orders;
       } catch (error) {
@@ -173,6 +170,7 @@ export default {
         const headers = {Authorization: `Bearer ${token}`} 
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/orders/${this.orderId}/reviews`, registerData, {headers});
         alert("리뷰작성 완료");
+        window.location.reload();
         // this.$router.push("/items/manage");
       }catch(error){
           alert('리뷰작성 실패');
