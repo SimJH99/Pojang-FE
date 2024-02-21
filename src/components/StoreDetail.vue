@@ -10,6 +10,7 @@
         <div class="likes text-sm text-gray-500 mt-1 flex items-center">
           찜 수: <span class="font-bold text-red-500">{{ store.likes }}</span>
         </div>
+        <div>프롭스 :  {{ $route.params.id }}</div>
       </div>
     </div>
     
@@ -56,6 +57,11 @@ import axios from 'axios';
 import ReviewListComponent from '@/components/ReviewList.vue';
 import MenuListComponent from '@/components/MenuList.vue';
 export default {
+  props: {
+            id: {
+                type: String,
+            }
+          },
   components:{ 
         ReviewListComponent,
         MenuListComponent
@@ -73,7 +79,7 @@ export default {
   methods: {
         async fetchStore() {
             try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/details`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`);
             this.store = response.data.result;
             }catch(error) {
                 console.log(error);

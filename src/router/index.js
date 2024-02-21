@@ -21,7 +21,7 @@ const routes = [
   {path:'/update/myinfo' , name: 'UpdateMyInfo' , component: UpdateMyInfoComponent},
   {path:'/menu' , name: 'Menu' , component: MenuList},
   {path:'/review' , name: 'Review' , component: ReviewList},
-  {path:'/store' , name: 'Store' , component: StoreDetailComponent},
+  {path:'/:id/store' , name: 'Store' , component: StoreDetailComponent, props: true},
   {path:'/sign-up-user' , name: 'sign-up-user' , component: SignUpUserComponent},
   {path:'/sign-up-owner' , name: 'sign-up-owner' , component: SignUpOwnerComponent},
   ...memberRoutes,
