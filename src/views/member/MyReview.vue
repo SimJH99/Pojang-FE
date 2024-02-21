@@ -19,7 +19,7 @@
         <ul>
           <li v-for="review in reviews" :key="review.id" class="mb-2">
             <h3 class="text-xl font-semibold text-gray-800 mb-2">리뷰 번호: {{ review.id }}</h3>
-            <p class="text-gray-600">가게: {{ review.store }}</p>
+            <p class="text-gray-600">가게: {{ review.storeName }}</p>
             <p class="text-gray-600">준 평점: {{ review.rating }}</p>
             <p class="text-gray-600">리뷰 내용: {{ review.contents }}</p>
           </li>
