@@ -37,7 +37,7 @@
         </router-link>
       </div>
       <div v-else class="bg-white p-4 rounded-md">
-        <p>주문 내역이 없습니다.</p>
+        <p>등록된 매장이 없습니다.</p>
       </div>
     </div>
   </div>

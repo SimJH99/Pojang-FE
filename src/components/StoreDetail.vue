@@ -38,7 +38,8 @@
     </div>
 
     <div v-if="tab === '리뷰'" class="bg-white p-4 shadow-md">
-        <ReviewListComponent/>
+        <ReviewListComponent
+        :storeId="store.id"/>
     </div>
 
     <div v-if="tab === '정보'" class="bg-white p-4 shadow-md">
@@ -125,7 +126,7 @@ export default {
         },
         toggleLike() {
           if(!localStorage.getItem("token")){
-            alert("로그인 후 찜 가능합니다.");
+            alert("로그인이 필요합니다.");
             window.location.href = "/login";
           }
           if (this.isLike) {
