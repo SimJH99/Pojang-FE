@@ -3,12 +3,11 @@
       <!-- 왼쪽 사이드바 -->
       <div class="w-1/6 bg-white p-4">
         <ul>
-          <li class="text-lg font-bold mb-2"><a href="/my-info">내 정보</a></li>
-          <li class="text-lg font-bold mb-2"><a href="/my-orders">주문 내역</a></li>
-          <li class="text-lg font-bold mb-2"><a href="/my-favorite">찜 목록</a></li>
-          <li class="text-lg font-bold mb-2"><a href="/my-review">리뷰 목록</a></li>
-          <li class="text-lg font-bold mb-2"><a href="/update/myinfo/">정보 수정</a></li>
-          <!-- 추가적인 카테고리 항목들을 필요에 따라 나열하세요 -->
+          <a href="/my-info"><li class="text-lg font-bold mb-2 hover:border-gray-300  hover:border-b-2">내 정보</li></a>
+        <a href="/my-orders"><li class="text-lg font-bold mb-2 hover:border-gray-300  hover:border-b-2">주문 내역</li></a>
+        <a href="/my-favorite"><li class="text-lg font-bold mb-2 hover:border-gray-300  hover:border-b-2">찜 목록</li></a>
+        <a href="/my-review"><li class="text-lg font-bold mb-2 hover:border-gray-300  hover:border-b-2">리뷰 목록</li></a>
+        <a href="/update/myinfo/"><li class="text-lg font-bold mb-2 hover:border-gray-300  hover:border-b-2">정보 수정</li></a>
         </ul>
       </div>
   

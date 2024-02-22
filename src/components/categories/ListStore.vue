@@ -1,8 +1,12 @@
 <template>
   <div class="w-2/3 mx-auto grid grid-cols-2 mb-3">
     <router-link v-for="store in filteredStores" :key="store.id" :to="getStoreDetailsLink(store.id)"
-  class="p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1">
-  <img :src="getImage(store.id)" class="w-[70px] h-[70px] object-cover mb-2 rounded-md mr-4">
+  :class="{'p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1':store.status === 'OPEN',
+  'p-4 border border-gray-300 bg-gray-100 rounded-md flex items-center mx-2 my-1':store.status === 'CLOSED',
+  }">
+  <img :src="getImage(store.id)" :class="{'w-[70px] h-[70px] bg-gray-100 object-cover mb-2 rounded-md mr-4': store.status === 'OPEN',
+  'w-[70px] h-[70px] bg-gray-100 object-cover mb-2 rounded-md mr-4 brightness-50': store.status === 'CLOSED', }
+  ">
   <div>
     <p class="text-gray-500">{{ store.name }}</p>
     <span class="font-bold text-yellow-500">★</span> 
@@ -16,6 +20,7 @@
 </router-link>
   </div>
 </template>
+
 <script setup>
 import { defineProps, ref, onMounted, watchEffect } from "vue";
 import axios from 'axios';
@@ -25,8 +30,8 @@ const props = defineProps({
   searchName: String
 });
 
-const pageSize = 10;
-let currentPage = 0 ;
+const pageSize = 10; //페이지 사이즈 10 설정
+let currentPage = 0 ;// 초기 페이지 0페이지 설정
 let isLastPage = false;
 let isLoading = false;
 let isInitialLoad = true; // 초기 반복하는 현상 제거
@@ -43,15 +48,21 @@ onMounted(async () => {
 });
 
 // props의 변경을 감지하고 filteredStores를 업데이트
+// 검색, 다른카테고리로 이동 했을 때 props가 변경하는 것 이기 때문에
+// 페이지 관련 변수들을 초기화한다.
 watchEffect(() => {
     stores.value = [];
     currentPage = 0;
     isLastPage = false;
     fetchData();
 });
+// 매장 상세 조회를 위한 함수
+// 매장목록에 storeId를 받아 path에 해당 주소로 이동하고
+// params로 해당 storeId를 id 변수로 선언한뒤 전달
 const getStoreDetailsLink = (storeId) => {
   return { path: `/${storeId}/store`, params: { id: storeId }};
 };
+// 무한 스크롤 기능 구현 
 const scrollPagination = async () => {
   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
   if (nearBottom && !isLastPage && !isLoading){
@@ -59,10 +70,12 @@ const scrollPagination = async () => {
     await fetchData(); // 하단에 도달하면 더 많은 데이터를로드합니다.
   }
 };
+// 이미지 조회 함수
 const getImage = (id) => {
   return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`
 };
 
+// 목록조회 함수
 async function fetchData() {
   isLoading = true;
   try {
@@ -80,9 +93,6 @@ async function fetchData() {
     console.log("currentPage" + currentPage);
     stores.value = [...stores.value, ...addStoreList];
     filteredStores.value = stores.value;
-    // stores.value = response.data.result;
-    // filteredStores.value = stores.value;
-    
   } catch (error) {
     console.error('데이터 조회 중 에러 발생:', error);
   }

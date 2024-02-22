@@ -23,7 +23,7 @@
                       <option value="중식">중식</option>
                       <option value="한식">한식</option>
                       <option value="일식">일식</option>
-                      <option value="야식">야식</option>
+                      <option value="햄버거">햄버거</option>
                       <option value="양식">양식</option>
                       <option value="분식">분식</option>
                       <!-- 필요에 따라 추가적인 옵션을 나열하세요 -->
