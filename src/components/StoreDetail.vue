@@ -32,7 +32,9 @@
 
     <div v-if="tab === '메뉴'" class="bg-white p-4 shadow-md">
       <ul class="mt-4">
-        <MenuListComponent/>
+        <MenuListComponent
+        :storeId="store.id"
+        />
       </ul>
     </div>
 
@@ -61,11 +63,7 @@ import axios from 'axios';
 import ReviewListComponent from '@/components/ReviewList.vue';
 import MenuListComponent from '@/components/MenuList.vue';
 export default {
-  props: {
-            id: {
-                type: String,
-            }
-          },
+  props:['id'],
   components:{ 
         ReviewListComponent,
         MenuListComponent
@@ -78,14 +76,14 @@ export default {
       isLike: null,
     };
   },
-  created() {
+  mounted() {
     this.fetchStore();
     this.fetchLike();
   },
   methods: {
         async fetchStore() {
             try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.id}/details`);
             this.store = response.data.result;
             }catch(error) {
                 console.log(error);
@@ -95,14 +93,14 @@ export default {
           try {
             const token = localStorage.getItem('token');
             const headers = { Authorization: `Bearer ${token}` };
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.store.id}/favorite`, { headers });
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.id}/favorite`, { headers });
             this.isLike = response.data;
             }catch(error) {
                 console.log(error);
             } 
         },
-        getImage(id) {
-            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
+        getImage(storeId) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${storeId}/image`;
         },
         async setLike() {
           const token = localStorage.getItem('token');

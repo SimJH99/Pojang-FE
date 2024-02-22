@@ -1,6 +1,6 @@
 <template>
-<div class="w-2/3 mx-auto grid grid-cols-2 mb-3">
-  <router-link v-for="store in filteredStores" :key="store.id" :to="getStoreDetailsLink(store.id)"
+  <div class="w-2/3 mx-auto grid grid-cols-2 mb-3">
+    <router-link v-for="store in filteredStores" :key="store.id" :to="getStoreDetailsLink(store.id)"
       class="p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1">
       <img :src="getImage(store.id)" class="w-[70px] h-[70px] object-cover mb-2 rounded-md mr-4">
       <div>
@@ -43,8 +43,7 @@ watchEffect(() => {
     fetchData();
 });
 const getStoreDetailsLink = (storeId) => {
-  // return `/${storeId}/store`;
-  return { path: `/${storeId}/store`, params: { id: storeId } };
+  return { path: `/${storeId}/store`, params: { id: storeId }};
 };
 const scrollPagination = async () => {
   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;

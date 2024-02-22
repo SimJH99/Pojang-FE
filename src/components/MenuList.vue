@@ -68,6 +68,7 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 export default {
+    props:['storeId'],
     data() {
         return {
             menuList: [],
@@ -90,8 +91,8 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/menus`);
-            // this.menuList = response.data.result;
+            console.log("this.storeId : " + this.storeId)
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus`);
             this.menuList = response.data.result.map(menu => ({...menu, quantity: 1}));
         } catch (error) {
             console.log(error);
@@ -128,6 +129,7 @@ export default {
                 }
                 const orderInfo = {
                     id : this.selectedMenu.id,
+                    storeId : this.storeId,
                     name: this.selectedMenu.name,
                     quantity: this.selectedMenu.quantity,
                     price: this.totalPrice,
@@ -150,14 +152,15 @@ export default {
                 }
             }
         },
-        getImage(id) {
-            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/5/menus/${id}/image`;
+        getImage(menuId) {
+            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus/${menuId}/image`;
         },
         async openModal(menu) {
             this.selectedMenu = menu;
             this.totalPrice = this.selectedMenu.price;
             this.selectedMenuOptions = {};
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/menus/${menu.id}`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus/${this.selectedMenu.id}`);
+            console.log(response.data.result);
             this.menuOptionGroups = response.data.result.menuOptionGroups;
             this.isModalOpen = true;
         },

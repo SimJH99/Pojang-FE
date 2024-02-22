@@ -36,7 +36,7 @@
         OrderCart
     },
     computed: {
-        ...mapGetters(['getCartMenus', 'getTotalQuantity', 'getTotalPrice'])
+        ...mapGetters(['getCartMenus', 'getTotalQuantity', 'getTotalPrice', 'getStoreId'])
     },
     data() {
       return {
@@ -47,37 +47,39 @@
     methods: {
       async executeOrder() {
         try{
-            const selectedMenuDto = this.getCartMenus.map(menu => {
-                return {
-                    menuId: menu.id,
-                    quantity: menu.quantity,
-                    selectedMenuOptions: menu.selectedMenuOptions
-                }
-            })
-            const orderDto = {
-                payment: this.payment,
-                requirement: this.requirement,
-                totalPrice: this.getTotalPrice,
-                selectedMenus: selectedMenuDto
-            }
-            const token = localStorage.getItem('token');
-                if (token == null){
-                    alert("로그인이 필요합니다.");
-                    this.$router.push({name : "Login"});
-                    return;
-                }
-            const headers = {Authorization: `Bearer ${token}`};
-            if (!confirm("정말로 주문하시겠습니까?")){
-              alert("주문 취소");
+          const storeId = localStorage.getItem('storeId');
+          const selectedMenuDto = this.getCartMenus.map(menu => {
+              return {
+                  menuId: menu.id,
+                  quantity: menu.quantity,
+                  selectedMenuOptions: menu.selectedMenuOptions
+              }
+          })
+          const orderDto = {
+              payment: this.payment,
+              requirement: this.requirement,
+              totalPrice: this.getTotalPrice,
+              selectedMenus: selectedMenuDto
+          }
+          const token = localStorage.getItem('token');
+          if (token == null){
+              alert("로그인이 필요합니다.");
+              this.$router.push({name : "Login"});
               return;
-            }
-            console.log(orderDto);
-            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/orders`, orderDto, {headers});
-            alert("주문 완료");
-            window.location.reload();
-          } catch(error){
-            console.log(error);
-            alert(error)
+          }
+          const headers = {Authorization: `Bearer ${token}`};
+          if (!confirm("정말로 주문하시겠습니까?")){
+            alert("주문 취소");
+            return;
+          }
+          console.log(orderDto)
+          await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${storeId}/orders`, orderDto, {headers});
+          alert("주문 완료");
+          this.$store.dispatch('clearCart');
+          window.location.href = "/";
+        } catch(error){
+          console.log(error);
+          alert(error);
         }
         // 여기에 폼 제출 로직 추가
         console.log('폼이 제출되었습니다.');
