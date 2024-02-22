@@ -16,8 +16,14 @@
             <div class="flex space-x-5 text-left mt-8">
                 <button @click="clickId = 1" class="bg-blue-300 px-4 py-2 rounded text-white">상세조회</button>
                 <button @click="clickId = 2" class="bg-red-300 px-4 py-2 rounded text-white">메뉴등록</button>
+                <button @click="clickId = 3" class="bg-red-300 px-4 py-2 rounded text-white">주문 내역</button>
             </div>
             <hr class="my-3 border-2 border-slate-500">
+            <div v-if="clickId == 3">
+                <StoreOrders 
+                :storeId = this.id
+                />
+            </div>
             <div v-if="clickId == 2">
                 <MyStoreMenuCreate />
             </div>
@@ -79,11 +85,12 @@
 <script>
 import axios from 'axios';
 import MyStoreMenuCreate from '@/views/Store/MyStoreMenuCreate.vue';
+import StoreOrders from '@/views/Store/StoreOrders.vue';
 export default {
-    props: {
-        id: {
-            type: String,
-        }
+    props:['id'],
+    components: {
+        MyStoreMenuCreate,
+        StoreOrders,
     },
     data() {
         return {
@@ -92,14 +99,15 @@ export default {
         };
     },
     created() {
-        this.fetchMember();
+        this.fetchStoreInfo();
     },
     methods: {
-        async fetchMember() {
+        async fetchStoreInfo() {
             try {
                 const token = localStorage.getItem('token');
                 const headers = { Authorization: `Bearer ${token}` };
-                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`, { headers });
+                // const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`, { headers });
+                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.id}/details`, { headers });
                 this.storeInfo = response.data.result;
             } catch (error) {
                 console.log(error);
@@ -111,10 +119,11 @@ export default {
         MyStoreUpdateId(StoreId) {
             return { path: `/${StoreId}/store-update`, params: { id: StoreId } }
         },
+        toStoreOrders(storeId){
+            return { path: `/${storeId}/store-orders`, params: {id: storeId}}
+        }
     },
-    components: {
-            MyStoreMenuCreate
-        },
+
 }
 </script>
 

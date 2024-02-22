@@ -4,6 +4,7 @@ import UpdateOwner from '@/views/Store/UpdateMyInfo';
 import MyStoreInfo from '@/views/Store/MyStoreInfo';
 import StoreCreate from '@/views/Store/StoreCreate';
 import StoreUpdate from '@/views/Store/StoreUpdate';
+import StoreOrders from '@/views/Store/StoreOrders';
 
 export const storeRoutes = [
     {
@@ -36,5 +37,10 @@ export const storeRoutes = [
         path: '/:id/store-update',
         name: 'StoreUpdate',
         component: StoreUpdate,
+    },
+    {
+        path: '/:id/store-orders',
+        name: 'StoreOrders',
+        component: StoreOrders,
     },
 ];

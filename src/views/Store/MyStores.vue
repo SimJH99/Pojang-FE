@@ -14,6 +14,7 @@
       <h2 class="text-3xl font-semibold mb-6 text-gray-800">내가게</h2>
       <div v-if="stores.length > 0" class="grid grid-cols-1 gap-4">
 
+
         <router-link v-for="store in stores" :key="store.id" class="bg-white rounded-md shadow-md p-6" :to="MyStoreInfoId(store.id)">
           <!-- <h3 class="text-xl font-semibold text-gray-800 mb-2">매장 등록 번호: {{ store.id }}</h3> -->
           <a href="/my-store-info">
@@ -96,8 +97,10 @@ export default {
         } catch(error){
           alert(error.response.data.message);
         }
+    },
+    myStoreInfoId(storeId){
+      return { path: `/${storeId}/my-store-info`, params: {id: storeId}}
     }
-    
   },
 };
 </script>
