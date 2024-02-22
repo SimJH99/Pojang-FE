@@ -94,6 +94,7 @@ export default {
             console.log("this.storeId : " + this.storeId)
             const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus`);
             this.menuList = response.data.result.map(menu => ({...menu, quantity: 1}));
+            console.log(this.menuList)
         } catch (error) {
             console.log(error);
         }
