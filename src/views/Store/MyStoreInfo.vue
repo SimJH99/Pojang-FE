@@ -32,12 +32,13 @@
                         <img :src="getImage(storeInfo.id)" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
                     </div>
                     <div>
-                        <label class="block text-lg font-bold text-gray-600">찜 수</label>
-                        <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.likes }}</div>
+                        <label class="block text-lg font-bold text-gray-600">찜 수</label> 
+                        <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.likes }}</div>    
                     </div>
                     <div>
                         <label class="block text-lg font-bold text-gray-600">평점</label>
-                        <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.avgRating }}</div>
+                        <div v-if="storeInfo.avgRating != 'NaN'" class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.avgRating }}</div>
+                        <div v-else class="mt-1 p-3 border-2 rounded-md">등록된 리뷰가 없습니다.</div>    
                     </div>
                     <div>
                         <label class="block text-lg font-bold text-gray-600">주소</label>
