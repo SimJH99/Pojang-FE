@@ -22,7 +22,7 @@
         </button>
       </div>
     </div>
-    <ListStore :category="selectedCategory" :searchName = "searchName"  />
+    <ListStore :category="selectedCategory" :searchName="searchName" />
   </div>
 </template>
 
@@ -55,7 +55,6 @@ const selectCategory = (category) => {
 // 검색 수행 함수
 const performSearch = () => {
   searchName.value = searchInput.value;
-  alert('입력 - ' + searchName.value);
-};  
+};
 
 </script>
