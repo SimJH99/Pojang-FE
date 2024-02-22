@@ -124,6 +124,10 @@ export default {
           this.store.likes -= 1;
         },
         toggleLike() {
+          if(!localStorage.getItem("token")){
+            alert("로그인 후 찜 가능합니다.");
+            window.location.href = "/login";
+          }
           if (this.isLike) {
             this.cancelLike();
           } else {
