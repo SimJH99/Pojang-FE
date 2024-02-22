@@ -21,7 +21,7 @@
             <p class="text-gray-600">가게: {{ review.storeName }}</p>
             <p class="text-gray-600">준 평점: {{ review.rating }}</p>
             <p class="text-gray-600">리뷰 내용: {{ review.contents }}</p>
-            <p class="text-gray-600"><img :src="getImage(review.id)" class="h-24 w-auto mt-2"></p>
+            <p v-if="review.imageUrl" class="text-gray-600"><img :src="getImage(review.id)" class="h-24 w-auto mt-2"></p>
           </li>
         </ul>
       </div>
