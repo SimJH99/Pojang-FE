@@ -40,7 +40,7 @@
             </ul>
           </p>
           <p class="text-gray-800 font-bold mt-2">총 주문 금액: {{ order.totalPrice }}원</p><br/>
-          <button v-if="!order.hasReview" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" @click="openModal(order.orderId)">리뷰 작성</button>  
+          <button v-if="!order.hasReview && order.orderStatus == '픽업완료'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" @click="openModal(order.orderId)">리뷰 작성</button>  
         </div>
       </div>
       <div v-else class="bg-white p-4 rounded-md">

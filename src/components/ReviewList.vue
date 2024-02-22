@@ -12,6 +12,7 @@
 <script>
 import axios from 'axios';
 export default {
+    props:['storeId'],
     data () {
         return {
             reviewList: [],
@@ -26,7 +27,7 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/reviews`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/reviews`);
             this.reviewList = response.data.result;
         }catch(error) {
             console.log(error);

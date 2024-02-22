@@ -30,9 +30,9 @@
                     </p>
                     <p class="text-gray-800 font-bold mt-2">총 주문 금액: {{ order.totalPrice }}원</p><br />
                     <div>
-                        <button v-if="order.orderStatus == 'PENDING'" @click="acceptOrder(order.orderId)" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">접수</button>
-                        <button v-if="order.orderStatus == 'PENDING'" @click="cancelOrder(order.orderId)" class="bg-red-500 text-white px-4 py-2 rounded-md mr-2">취소</button>
-                        <button v-if="order.orderStatus == 'ORDERED'" @click="confirmOrder(order.orderId)" class="bg-green-500 text-white px-4 py-2 rounded-md">확정</button>
+                        <button v-if="order.orderStatus == '접수대기'" @click="acceptOrder(order.orderId)" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">접수</button>
+                        <button v-if="order.orderStatus == '접수대기'" @click="cancelOrder(order.orderId)" class="bg-red-500 text-white px-4 py-2 rounded-md mr-2">취소</button>
+                        <button v-if="order.orderStatus == '주문접수'" @click="confirmOrder(order.orderId)" class="bg-green-500 text-white px-4 py-2 rounded-md">확정</button>
                     </div>
                 </div>
 
