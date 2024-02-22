@@ -5,16 +5,16 @@
       <form @submit.prevent="doLogin" class="w-full">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-600">이메일</label>
-          <input v-model="email" type="email" id="email" name="email" class="mt-1 p-3 w-1/2 border rounded-md focus:outline-none focus:border-indigo-500">
+          <input v-model="email" type="email" id="email" name="email" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
         <div class="mb-6">
           <label for="password" class="block text-sm font-medium text-gray-600">비밀번호</label>
-          <input v-model="password" type="password" id="password" name="password" class="mt-1 p-3 w-1/2 border rounded-md focus:outline-none focus:border-indigo-500">
+          <input v-model="password" type="password" id="password" name="password" class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500">
         </div>
-        <button type="submit" class="bg-black text-white px-4 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800 w-1/2">
+        <button type="submit" class="bg-black text-white px-4 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800 w-full">
           로그인
         </button>
-        <div class="mt-4 flex w-1/2 items-center justify-end space-x-4">
+        <div class="mt-4 flex w-full items-center justify-end space-x-4">
           <a href="/sign-up-user" class="text-sm text-gray-600 hover:underline text-left">회원가입</a>
           <span class="text-sm text-gray-600">|</span>
           <a href="#" class="text-sm text-gray-600 hover:underline">아이디 찾기</a>
@@ -65,14 +65,7 @@ export default {
                     alert("Login Failed");
                 }
             } catch(error){
-                const error_message = error.response.data.error_message;
-                if(error_message){
-                    console.log(error_message);
-                    alert(error_message);
-                } else{
-                    console.log(error);
-                    alert("Login Failed")
-                } 
+                alert(error.response.data.message); 
             }
         }
     },

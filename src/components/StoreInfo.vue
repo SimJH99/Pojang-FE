@@ -16,9 +16,9 @@
 <script>
 import axios from 'axios';
 export default {
-    data () {
+    data() {
         return {
-            store : {},
+            store: {},
             businessHours: "",
             phone: "05079727736 (요기요 제공 번호)",
             address: "제주특별자치도 제주시 노형동 904-4 1층",
@@ -34,6 +34,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

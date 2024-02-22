@@ -1,7 +1,6 @@
 import {createRouter,createWebHistory} from 'vue-router';
 import HomeComponent from '@/components/StoreCategories.vue';
 import LoginComponent from '@/components/Login_User.vue';
-import UpdateMyInfoComponent from '@/components/UpdateMyInfo.vue';
 import StoreDetailComponent from '@/components/StoreDetail.vue'; 
 import ReviewList from '@/components/ReviewList.vue';
 import MenuList from '@/components/MenuList.vue';
@@ -17,7 +16,6 @@ import { storeRoutes } from "./storeRouter.js";
 const routes = [
   {path:'/' , name: 'HOME' , component: HomeComponent},
   {path:'/login' , name: 'Login' , component: LoginComponent},
-  {path:'/update/myinfo' , name: 'UpdateMyInfo' , component: UpdateMyInfoComponent},
   {path:'/menu' , name: 'Menu' , component: MenuList},
   {path:'/review' , name: 'Review' , component: ReviewList},
   {path:'/:id/store' , name: 'Store' , component: StoreDetailComponent, props: true},
