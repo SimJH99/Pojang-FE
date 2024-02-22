@@ -2,7 +2,7 @@
     <div class="min-h-screen flex bg-gray-100">
 
         <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="w-5/6 p-8">
+        <div class="w-5/6 p-8 mx-auto">
             <h2 class="text-3xl font-semibold mb-6 text-gray-800">주문표</h2>
             <div v-if="getCartMenus.length > 0" class="bg-white p-4 rounded-md">
                 <ul>
@@ -17,11 +17,15 @@
                             </li>
                         </ul>
                     </li>
-                    <p class="text-gray-800 font-bold mt-5">합계 금액: {{ getTotalPrice }}원</p>
+                    <p class="text-gray-800 font-bold mt-5 mb-3">합계 금액: {{ getTotalPrice }}원</p>
                 </ul>
-                <div class="mt-4">
-                    <a href="/order" class="bg-green-500 text-white p-2 rounded-md mr-3">주문하기</a>
+                <div class="mt-4" v-if="orederButton === 1">
+                    <!-- <a href="/order" class="bg-green-500 text-white p-2 rounded-md mr-3">주문하기</a> -->
+                    <button @click="orederCart" class="bg-green-500 text-white p-2 mr-3 rounded-md">주문하기</button>
                     <button @click="clearCart" class="bg-blue-500 text-white p-2 rounded-md">장바구니 비우기</button>
+                </div>
+                <div  v-if="orederButton === 2">
+                    <OrderDetail />
                 </div>
             </div>
             <div v-else class="bg-white p-4 rounded-md">
@@ -34,12 +38,20 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import axios from 'axios';
+import OrderDetail from '@/views/order/OrderDetail.vue';
 
 export default {
     computed: {
         ...mapGetters(['getCartMenus', 'getTotalQuantity', 'getTotalPrice'])
     },
-
+    components: {
+        OrderDetail
+    },
+    data() {
+      return {
+        orederButton: 1,
+      };
+    },
     methods: {
         ...mapActions(['clearCart']),
         async placeOrder(){
@@ -76,6 +88,9 @@ export default {
                     console.log(error);
                 }
             }
+        },
+        orederCart(){
+            this.orederButton = 2;
         },
         clearCart(){
             // this.$store.commit('clearCart');

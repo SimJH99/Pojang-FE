@@ -1,9 +1,8 @@
 <!-- src/components/SignUp.vue -->
   <template>
-    <div class="container bg-gray-100 min-w-full min-h-screen flex justify-center items-center">
-        <div class="max-w-lg w-full p-6 bg-white rounded-md shadow-md border-3 border-gray-800">
+    <div class="container min-w-full  flex  items-center border-t-[3px]  ">
+        <div class="w-1/4 p-6 bg-white rounded-md shadow-md border-3 mt-4 border-gray-800">
           <h2 class="text-2xl font-semibold mb-4">주문 정보 입력</h2>
-  
           <div class="mb-4">
             <label class="block text-sm font-semibold text-gray-800 mb-1">결제수단</label>
             <select v-model="payment" class="mt-1 p-2 w-full border rounded-md">
@@ -14,26 +13,23 @@
               <option value="toss">토스 페이</option>
             </select>
           </div>
-
           <div class="mb-4">
             <label for="requirement" class="block text-sm font-semibold text-gray-800 mb-1">주문 시 요청 사항</label>
             <input v-model="requirement" id="requirement" type="text" class="mt-1 p-2 w-full border rounded-md">
           </div>
-
           <button @click="executeOrder" class="bg-blue-500 text-white p-2 rounded-md">결제하기</button>
         </div>
-      <OrderCart
-    />
+      <!-- <OrderCart/> -->
     </div>
   </template>
   
   <script>
   import {mapGetters} from 'vuex';
-  import OrderCart from '@/views/order/OrderCart.vue';
+  // import OrderCart from '@/views/order/OrderCart.vue';
   import axios from 'axios'; 
   export default {
     components: {
-        OrderCart
+        // OrderCart
     },
     computed: {
         ...mapGetters(['getCartMenus', 'getTotalQuantity', 'getTotalPrice', 'getStoreId'])
@@ -90,9 +86,6 @@
 </script>
 
 <style scoped>
-.container {
-  background-color: #edf2f7; /* 컨테이너의 배경색 */
-}
 
 form {
   width: 100%; /* 폼의 너비를 100%로 설정하여 화면에 꽉 차도록 함 */
