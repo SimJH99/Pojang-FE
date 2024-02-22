@@ -15,12 +15,23 @@
       <div v-if="stores.length > 0" class="grid grid-cols-1 gap-4">
 
         <router-link v-for="store in stores" :key="store.id" class="bg-white rounded-md shadow-md p-6" :to="MyStoreInfoId(store.id)">
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">매장 등록 번호: {{ store.id }}</h3>
+          <!-- <h3 class="text-xl font-semibold text-gray-800 mb-2">매장 등록 번호: {{ store.id }}</h3> -->
           <a href="/my-store-info">
             <div class="bg-white rounded-md shadow-md p-6" flex>
-              <p class="text-gray-600">매장명: {{ store.name }}</p>
-              <p class="text-gray-600"><img :src="getImage(store.id)" class="h-24 w-auto mt-2"></p>
+              <div class="flex items-center mb-2">
+                <img :src="getImage(store.id)" class="h-24 w-auto object-cover mb-2 rounded-md mr-4">
+                <div>
+                  <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.name }}</p>
+                  <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.category }}</p>
+                  <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.status }}</p>
+                </div>
+              </div>
+              <div class="flex space-x-5 text-left mt-2">
+                <button v-if="store.status == 'CLOSED'" @click.prevent="openStore(store.id)" class="bg-blue-300 px-4 py-2 rounded text-white">OPEN</button>
+                <button v-else @click.prevent="closeStore(store.id)" class="bg-red-300 px-4 py-2 rounded text-white">CLOSE</button>
+              </div>
             </div>
+            
           </a>
         </router-link>
       </div>
@@ -63,7 +74,30 @@ export default {
     },
     MyStoreInfoId(StoreId){
       return { path: `/${StoreId}/my-store-info`, params: {id: StoreId}}
+    },
+    async openStore(id) {
+      try{
+            const token = localStorage.getItem('token');
+            const headers = {Authorization: `Bearer ${token}`} 
+            await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/open`, {}, {headers});
+            alert("OPEN 완료");
+            window.location.reload();
+        } catch(error){
+          alert(error.response.data.message);
+        }
+    },
+    async closeStore(id) {
+      try{
+            const token = localStorage.getItem('token');
+            const headers = {Authorization: `Bearer ${token}`} 
+            await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/close`, {}, {headers});
+            alert("CLOSE 완료");
+            window.location.reload();
+        } catch(error){
+          alert(error.response.data.message);
+        }
     }
+    
   },
 };
 </script>
