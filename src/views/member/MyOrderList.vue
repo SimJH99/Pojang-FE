@@ -7,7 +7,7 @@
         <li class="text-lg font-bold mb-2"><a href="/my-orders">주문 내역</a></li>
         <li class="text-lg font-bold mb-2"><a href="/my-favorite">찜 목록</a></li>
         <li class="text-lg font-bold mb-2"><a href="/my-review">리뷰 목록</a></li>
-        <li class="text-lg font-bold mb-2"><a href="/my-info/update">정보 수정</a></li>
+        <li class="text-lg font-bold mb-2"><a href="/update/myinfo/">정보 수정</a></li>
         <!-- 추가적인 카테고리 항목들을 필요에 따라 나열하세요 -->
       </ul>
     </div>
@@ -172,7 +172,7 @@ export default {
         const headers = {Authorization: `Bearer ${token}`} 
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/orders/${this.orderId}/reviews`, registerData, {headers});
         alert("리뷰작성 완료");
-        // window.location.reload();
+        window.location.reload();
       }catch(error){
           alert('리뷰작성 실패');
       }

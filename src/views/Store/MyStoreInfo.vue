@@ -52,19 +52,19 @@
                         <label class="block text-lg font-bold text-gray-600">매장번호</label>
                         <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.storeNumber }}</div>
                     </div>
-                    <div>
-                        <label class="block text-lg font-bold text-gray-600">소개 글</label>
-                        <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.introduction }}</div>
-                    </div>
-                    <div>
-                        <label class="block text-lg font-bold text-gray-600">운영시간</label>
-                        <div class="mt-1 p-3 border-2 rounded-md">{{ storeInfo.operationTime }}</div>
-                    </div>
-                    <button type="submit"
-                        class="bg-black text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800">
+                <div>
+                    <label class="block text-lg font-bold text-gray-600">소개 글</label>
+                    <div class="mt-1 p-3 border-2 rounded-md">{{storeInfo.introduction}}</div>
+                </div>
+                <div>
+                    <label class="block text-lg font-bold text-gray-600">운영시간</label>
+                    <div class="mt-1 p-3 border-2 rounded-md">{{storeInfo.operationTime}}</div>
+                </div>
+                <router-link   class="bg-white rounded-md shadow-md p-6" :to="MyStoreUpdateId($route.params.id)">
+                    <button type="submit" class="bg-black text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800">
                         정보 수정
                     </button>
-                </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -75,36 +75,38 @@ import axios from 'axios';
 import MyStoreMenuCreate from '@/views/Store/MyStoreMenuCreate.vue';
 export default {
     props: {
-        id: {
-            type: String,
-        }
-    },
-    data() {
-        return {
-            clickId: 1,
-            storeInfo: {},
-        };
-    },
-    created() {
-        this.fetchMember();
-    },
-    methods: {
-        async fetchMember() {
-            try {
-                const token = localStorage.getItem('token');
-                const headers = { Authorization: `Bearer ${token}` };
-                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`, { headers });
-                this.storeInfo = response.data.result;
+            id: {
+                type: String,
             }
-            catch (error) {
-                console.log(error);
-            }
-        },
+          },
+  data() {
+    return {
+        storeInfo: {},
+    };
+  },
+  created() {
+    this.fetchMember();
+  },
+  methods: {
+    components:{
+        MyStoreMenuCreate
+        
+    },  
+    async fetchMember() {
+      try {
+        const token = localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}/details`, { headers });
+        this.storeInfo = response.data.result;
+      } catch (error) {
+        console.log(error);
+      },
         getImage(id) {
             return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
         },
+         MyStoreUpdateId(StoreId){
+      return { path: `/${StoreId}/store-update`, params: {id: StoreId}}
     },
-    components:{MyStoreMenuCreate},
 }
 </script>
 

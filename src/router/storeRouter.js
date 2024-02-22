@@ -33,7 +33,7 @@ export const storeRoutes = [
         component: StoreCreate,
     },
     {
-        path: '/store-update',
+        path: '/:id/store-update',
         name: 'StoreUpdate',
         component: StoreUpdate,
     },
