@@ -124,7 +124,23 @@ export default {
             alert("매장등록 완료");
             this.$router.push({name : 'MyStores'});
         } catch(error){
-            alert(error.message);
+            if(!this.name) {
+                alert("상호명을 입력하세요.")
+            }
+            else if(!this.businessNumber) {
+                alert("사업자 번호를 입력하세요.")
+            }
+            else if(!this.category) {
+                alert("카테고리를 선택하세요.")
+            }
+            else if(!this.storeNumber) {
+                alert("전화번호를 입력하세요.")
+            }
+            else if(!this.operationTime) {
+                alert("운영시간을 입력하세요.")
+            }else {
+                alert(error.response.data.message);
+            }
         }
         // 여기에 폼 제출 로직 추가
         console.log('폼이 제출되었습니다.');
