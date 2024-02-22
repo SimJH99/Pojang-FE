@@ -4,16 +4,19 @@
   <div class="w-full h-[84px] mx-auto max-w-[1400px] flex items-center justify-between px-4">
       <div class="flex items-center space-x-10">
           <div class="grid-cols-4 col-span-4">
-            <router-link to="/">
+            <router-link to="/" v-show="userRole !== 'ROLE_OWNER'">
+                <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
+            </router-link>
+            <router-link to="/my-stores" v-show="userRole === 'ROLE_OWNER'">
                 <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
             </router-link>
           </div>
       </div>
       <div class="flex items-center space-x-4">
-        <router-link v-bind:to="`/login`"><button v-if="!isLogin" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8" >로그인</button></router-link>
-        <button v-if="isLogin" @click="Rolecheck" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8">마이페이지</button>
-        <button v-if="isLogin" @click="doLogout" class="rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8" >로그아웃</button>
-        <a v-if="isLogin && userRole === 'ROLE_USER'" href="/cart" class="rounded-md text-slate-50 bg-orange-500 p-2 px-8">주문표({{ getTotalQuantity }})</a>
+        <router-link v-bind:to="`/login`"><button v-if="!isLogin" class="hover:bg-rose-400 rounded-md text-slate-50 border-2 border-slate-50 p-2 px-8" >로그인</button></router-link>
+        <button v-if="isLogin" @click="Rolecheck" class="rounded-md hover:bg-rose-400 text-slate-50 border-2 border-slate-50 p-2 px-8">마이페이지</button>
+        <button v-if="isLogin" @click="doLogout" class="rounded-md hover:bg-rose-400 text-slate-50 border-2 border-slate-50 p-2 px-8" >로그아웃</button>
+        <a v-if="isLogin && userRole === 'ROLE_USER'" href="/cart" class="rounded-md hover:bg-orange-400 text-slate-50 bg-orange-500 p-2 px-8">주문표({{ getTotalQuantity }})</a>
       </div>
   </div>
 </div>

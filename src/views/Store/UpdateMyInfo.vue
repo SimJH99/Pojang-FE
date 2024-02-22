@@ -3,11 +3,10 @@
       <!-- 왼쪽 사이드바 -->
       <div class="w-1/6 bg-white p-4">
         <ul>
-            <li class="text-lg font-bold mb-2"><a href="/my-info-owner">내 정보</a></li>
-            <li class="text-lg font-bold mb-2"><a href="/update-my-info">내 정보 수정</a></li>
-            <li class="text-lg font-bold mb-2"><a href="/store-create">매장 등록</a></li>
-            <li class="text-lg font-bold mb-2"><a href="/my-stores">내 매장리스트</a></li>
-            <!-- 추가적인 카테고리 항목들을 필요에 따라 나열하세요 -->
+          <a href="/my-info-owner"><li class="text-lg font-bold mb-2">내 정보</li></a>
+          <a href="/update-my-info"><li class="text-lg font-bold mb-2">내 정보 수정</li></a>
+          <a href="/store-create"><li class="text-lg font-bold mb-2">매장 등록</li></a>
+          <a href="/my-stores"><li class="text-lg font-bold mb-2">내 매장리스트</li></a>
         </ul>
     </div>
   
@@ -116,8 +115,4 @@
     },
   };
   </script>
-  
-  <style scoped>
-  /* Tailwind CSS 클래스를 직접 사용하거나 추가적인 스타일을 작성할 수 있습니다. */
-  </style>
   
