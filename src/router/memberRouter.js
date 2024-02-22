@@ -2,6 +2,7 @@ import MyOrderList from '@/views/member/MyOrderList';
 import MyInfo from '@/views/member/MyInfo';
 import MyFavorite from '@/views/member/MyFavorite';
 import MyReview from '@/views/member/MyReview';
+import UpdateMyInfoComponent from '@/views/member/UpdateMyInfo';
 
 export const memberRoutes = [
     {
@@ -23,5 +24,10 @@ export const memberRoutes = [
         path: '/my-review',
         name: 'MyReview',
         component: MyReview,
+    },
+    {
+        path:'/update/myinfo' , 
+        name: 'UpdateMyInfo' , 
+        component: UpdateMyInfoComponent
     },
 ]

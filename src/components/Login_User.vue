@@ -65,14 +65,7 @@ export default {
                     alert("Login Failed");
                 }
             } catch(error){
-                const error_message = error.response.data.error_message;
-                if(error_message){
-                    console.log(error_message);
-                    alert(error_message);
-                } else{
-                    console.log(error);
-                    alert("Login Failed")
-                } 
+                alert(error.response.data.message); 
             }
         }
     },
