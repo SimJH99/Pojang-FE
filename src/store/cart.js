@@ -4,14 +4,16 @@ function initState(){
     return {
         cartMenus: JSON.parse(localStorage.getItem('cartMenus')) || [],
         totalPrice: localStorage.getItem('totalPrice') || 0,
-        totalQuantity: localStorage.getItem('totalQuantity') || 0
+        totalQuantity: localStorage.getItem('totalQuantity') || 0,
+        storeId: localStorage.getItem('storeId') || 0
     }
 }
 
-function updateLocalStorage(cartMenus, totalPrice, totalQuantity){
+function updateLocalStorage(cartMenus, totalPrice, totalQuantity, storeId){
     localStorage.setItem('cartMenus', JSON.stringify(cartMenus));
     localStorage.setItem('totalPrice', totalPrice);
     localStorage.setItem('totalQuantity', totalQuantity);
+    localStorage.setItem('storeId', storeId);
 }
 
 export default createStore({
@@ -28,13 +30,15 @@ export default createStore({
             }
             state.totalPrice = parseInt(state.totalPrice) + orderInfo.price;
             state.totalQuantity = parseInt(state.totalQuantity) + orderInfo.quantity;
-            updateLocalStorage(state.cartMenus, state.totalPrice, state.totalQuantity);
+            state.storeId = orderInfo.storeId;
+            updateLocalStorage(state.cartMenus, state.totalPrice, state.totalQuantity, state.storeId);
         }, 
         clearCart(state){
             state.cartMenus = [];
             state.totalQuantity = 0;
             state.totalPrice = 0;
-            updateLocalStorage(state.cartMenus, state.totalPrice, state.totalQuantity);
+            state.storeId = 0;
+            updateLocalStorage(state.cartMenus, state.totalPrice, state.totalQuantity, state.storeId);
         }
     },
     actions: {
@@ -48,6 +52,7 @@ export default createStore({
     getters: {
         getCartMenus: state => state.cartMenus,
         getTotalPrice: state => state.totalPrice,
-        getTotalQuantity: state => state.totalQuantity
+        getTotalQuantity: state => state.totalQuantity,
+        getStoreId: state => state.storeId
     }
 });
