@@ -15,7 +15,6 @@
         >♥</button>
           <span class="font-bold text-red-500">{{ store.likes }}</span>
         </div>
-        <div>프롭스 :  {{ $route.params.id }}</div>
       </div>
     </div>
     
@@ -96,7 +95,7 @@ export default {
           try {
             const token = localStorage.getItem('token');
             const headers = { Authorization: `Bearer ${token}` };
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/1/favorite`, { headers });
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.store.id}/favorite`, { headers });
             this.isLike = response.data;
             }catch(error) {
                 console.log(error);
