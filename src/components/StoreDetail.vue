@@ -8,7 +8,6 @@
           <span class="font-bold text-yellow-500">★</span> 
           <span v-if="store.avgRating != 'NaN'" class="font-bold text-yellow-500">{{ store.avgRating }}</span>
           <span v-else class="font-bold text-gray-500" style="font-size: 0.8em;">등록된 리뷰가 없습니다.</span>
-
         </div> 
         <div class="likes text-sm text-gray-500 mt-1 flex items-center" style="font-size: 1.5em; background: none; border: none;">
           <button @click="toggleLike" :class="isLike ? 'font-bold text-red-500' : 'font-bold text-gray-500'"
@@ -54,6 +53,9 @@
         <div class="info-item">사업자등록번호: {{ store.businessNumber }}</div>
       </div>
     </div>
+    <div v-if="tab === '타이머'" class="bg-white p-4 shadow-md">
+      로딩중...
+    </div>
   </div>
 </template>
 
@@ -72,13 +74,16 @@ export default {
     return {
       store: {},
       tabs: ['메뉴', '리뷰', '정보'],
-      tab: '메뉴',
+      tab: '타이머',
       isLike: null,
     };
   },
   mounted() {
     this.fetchStore();
     this.fetchLike();
+    setTimeout(() => {
+      this.tab = '메뉴';
+    }, 100);
   },
   methods: {
         async fetchStore() {

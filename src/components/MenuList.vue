@@ -12,7 +12,6 @@
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75" @click="closeModal"></div>
             </div>
-
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -170,6 +169,9 @@ export default {
             this.selectedMenuOptionGroup = {};
             this.menuOptionGroups = [];
         },
+        async fetchMenu() {
+            
+        }
     }
 }
 </script>

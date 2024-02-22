@@ -1,13 +1,13 @@
 <template>
   <div class="w-2/3 mx-auto grid grid-cols-2 mb-3">
     <router-link v-for="store in filteredStores" :key="store.id" :to="getStoreDetailsLink(store.id)"
-      class="p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1">
-      <img :src="getImage(store.id)" class="w-[70px] h-[70px] object-cover mb-2 rounded-md mr-4">
-      <div>
-        <p class="text-gray-500">{{ store.name }}</p>
-        <p class="text-gray-500">{{ store.status }}</p>
-      </div>
-    </router-link>
+  class="p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1">
+  <img :src="getImage(store.id)" class="w-[70px] h-[70px] object-cover mb-2 rounded-md mr-4">
+  <div>
+    <p class="text-gray-500">{{ store.name }}</p>
+    <p v-if="store.status === 'CLOSED'" class="text-red-500">영업이 종료되었습니다.</p>
+  </div>
+</router-link>
   </div>
 </template>
 <script setup>
@@ -18,6 +18,7 @@ const props = defineProps({
   category: String,
   searchName: String
 });
+
 const pageSize = 10;
 let currentPage = 0 ;
 let isLastPage = false;
