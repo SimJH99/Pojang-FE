@@ -59,7 +59,12 @@ export default {
                     localStorage.setItem("email", decoded.sub);
                     localStorage.setItem("role", decoded.role);
                     localStorage.setItem("token", token);
-                    window.location.href = "/";
+                    console.log(decoded.role)
+                    if(decoded.role == 'ROLE_OWNER') {
+                      window.location.href = "/my-stores"
+                    }else {
+                      window.location.href = "/";
+                    }
                 } else{
                     console.log("200 ok but not token");
                     alert("Login Failed");
