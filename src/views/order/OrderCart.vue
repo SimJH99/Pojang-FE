@@ -75,7 +75,7 @@ export default {
                     return;
                 }
                 const headers = {Authorization: `Bearer ${token}`};
-                await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/5/orders`, orderMenus, {headers});
+                await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/4/orders`, orderMenus, {headers});
                 alert("주문이 완료되었습니다.");
                 // this.$store.commit('clearCart');
                 this.$store.dispatch('clearCart');

@@ -23,8 +23,8 @@
                 <img :src="getImage(store.id)" class="h-24 w-auto object-cover mb-2 rounded-md mr-4">
                 <div>
                   <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.name }}</p>
-                  <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.category }}</p>
-                  <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.status }}</p>
+                  <p class="text-l font-semibold text-gray-600 mb-2">{{ store.category }}</p>
+                  <p class="text-l font-semibold text-gray-600 mb-2">{{ store.status }}</p>
                 </div>
               </div>
               <div class="flex space-x-5 text-left mt-2">

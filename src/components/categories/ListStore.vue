@@ -5,6 +5,12 @@
   <img :src="getImage(store.id)" class="w-[70px] h-[70px] object-cover mb-2 rounded-md mr-4">
   <div>
     <p class="text-gray-500">{{ store.name }}</p>
+    <span class="font-bold text-yellow-500">★</span> 
+    <span v-if="store.avgRating != 'NaN'" class="font-bold text-yellow-500">{{ store.avgRating }}</span>
+    <span v-else class="font-bold text-yellow-500">0</span>
+    <span class="font-bold text-red-500">&nbsp;♥</span> 
+    <span class="font-bold text-red-500">{{ store.likes }}</span>    
+    <p class="text-gray-500" style="font-size: 0.8em;">주문 수 : {{store.countOrder}}</p>
     <p v-if="store.status === 'CLOSED'" class="text-red-500">영업이 종료되었습니다.</p>
   </div>
 </router-link>
