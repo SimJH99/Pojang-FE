@@ -1,6 +1,6 @@
 <template>
 	<AppHeader />
-    <router-view/>
+    <router-view class="min-h-[800px]"/>
 	<AppFooter/>
 </template>
 

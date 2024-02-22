@@ -160,7 +160,6 @@ export default {
 </script>
 
 <style>
-/* 필요한 스타일을 추가하세요 */
 .store-info {
   /* 매장 정보 스타일 */
   padding: 1rem;
