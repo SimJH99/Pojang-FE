@@ -171,7 +171,8 @@
             alert("회원가입 완료");
             this.$router.push({name : 'Login'});
         } catch(error){
-          alert('회원가입 실패');
+          console.log(error);
+          alert(error.response.data.message);
         }
       },
         validatePhoneNumber() {
