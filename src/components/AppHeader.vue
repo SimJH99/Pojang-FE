@@ -43,7 +43,7 @@ export default {
     methods: {
         doLogout(){
             localStorage.clear();
-            window.location.reload();
+            window.location.href = "/";
         },
         Rolecheck(){
             if(this.userRole == "ROLE_USER" || this.userRole == "ROLE_ADMIN"){
