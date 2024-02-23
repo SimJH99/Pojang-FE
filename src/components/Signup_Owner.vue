@@ -171,7 +171,8 @@
             alert("회원가입 완료");
             this.$router.push({name : 'Login'});
         } catch(error){
-          alert('회원가입 실패');
+          console.log(error);
+          alert(error.response.data.message);
         }
         // 여기에 폼 제출 로직 추가
         console.log('폼이 제출되었습니다.');
