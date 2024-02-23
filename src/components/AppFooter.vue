@@ -1,6 +1,6 @@
 <template>
   <div class=" h-[130px] bg-gray-900 text-white ">
-    <div class="max-w-auto mx-auto py-8 px-4">
+    <div class="max-w-auto mx-auto py-8 h-full px-4">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div>
           <a href="https://github.com/Team-SNS/Pojang-BE?tab=readme-ov-file#%ED%8C%80-%EB%AA%85-sns">
