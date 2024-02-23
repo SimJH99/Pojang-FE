@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button @click="addCart"
+                        <button v-if="status === 'OPEN'" @click="addCart"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                             장바구니 담기
                         </button>
@@ -67,7 +67,7 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 export default {
-    props:['storeId'],
+    props:['storeId', 'status'],
     data() {
         return {
             menuList: [],
@@ -86,6 +86,7 @@ export default {
             isLoading: false,
             isModalOpen: false,
             selectedMenu: null,
+            selectedStore: null,
         }
     },
     async created() {

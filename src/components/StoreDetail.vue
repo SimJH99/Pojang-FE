@@ -33,6 +33,7 @@
       <ul class="mt-4">
         <MenuListComponent
         :storeId="store.id"
+        :status="store.status"
         />
       </ul>
     </div>
