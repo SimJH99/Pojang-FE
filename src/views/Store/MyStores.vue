@@ -28,8 +28,8 @@
                 </div>
               </div>
               <div class="flex space-x-5 text-left mt-2">
-                <button v-if="store.status == 'CLOSED'" @click.prevent="openStore(store.id)" class="bg-blue-300 px-4 py-2 rounded text-white">OPEN</button>
-                <button v-else @click.prevent="closeStore(store.id)" class="bg-red-300 px-4 py-2 rounded text-white">CLOSE</button>
+                <button v-if="store.status == 'CLOSED'" @click.prevent="openStore(store.id)" class="bg-blue-300 px-4 py-2 rounded text-white">영업 시작</button>
+                <button v-else @click.prevent="closeStore(store.id)" class="bg-red-300 px-4 py-2 rounded text-white">영업 종료</button>
               </div>
             </div>
             
@@ -81,7 +81,7 @@ export default {
             const token = localStorage.getItem('token');
             const headers = {Authorization: `Bearer ${token}`} 
             await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/open`, {}, {headers});
-            alert("OPEN 완료");
+            alert("영업이 시작되었습니다.");
             window.location.reload();
         } catch(error){
           alert(error.response.data.message);
@@ -92,7 +92,7 @@ export default {
             const token = localStorage.getItem('token');
             const headers = {Authorization: `Bearer ${token}`} 
             await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/close`, {}, {headers});
-            alert("CLOSE 완료");
+            alert("영업을 종료합니다.");
             window.location.reload();
         } catch(error){
           alert(error.response.data.message);
