@@ -8,7 +8,10 @@ module.exports = {
     extend: {
       blur: {
         xs: '1px',
-      }
+      },
+      fontFamily: {
+        BMJUA : ['@/assets/BMJUA_ttf.ttf'],
+      },
     },
   },
   plugins: [],

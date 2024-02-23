@@ -6,7 +6,7 @@
       <div class="p-8 rounded-md h-full">
         <div class="flex items-center justify-center h-full">
           <input v-model="searchInput" type="text" class="p-2 border rounded-l-md w-[35%]" placeholder="가게명 입력 해주세요" @keyup.enter="performSearch" />
-          <button @click="performSearch" class="p-2 hover:bg-blue-400 bg-blue-500 text-white rounded-r-md focus:outline-none">
+          <button @click="performSearch" class="p-2 hover:bg-teal-300 bg-teal-400 text-white rounded-r-md focus:outline-none">
             검색
           </button>
         </div>
@@ -15,7 +15,7 @@
     <div class="flex overflow-x-auto justify-center p-4">
       <div v-for="category in categories" :key="category.id">
         <button :class="{
-          'text-gray-800 font-semibold py-2 px-9 border border-gray-300 bg-blue-500': selectedCategory === category.category,
+          'text-gray-800 font-semibold py-2 px-9 border border-gray-300 bg-[#ff2972]': selectedCategory === category.category,
           'bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-9 border border-gray-300': selectedCategory !== category.category
         }" @click="selectCategory(category)">
           {{ category.id === 1 ? '전체보기' : category.category }}

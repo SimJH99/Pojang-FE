@@ -1,14 +1,16 @@
 <template>
   <!-- 요기요 컬러 #ff7799 하지만 tailwind는 따로 세팅 해줘야 합니다. 최대한 비슷한 색깔로 했습니다. -->
-  <div class="bg-rose-600">
+  <div class="bg-[#ff2972]">
   <div class="w-full h-[84px] mx-auto max-w-[1400px] flex items-center justify-between px-4">
       <div class="flex items-center space-x-10">
           <div class="grid-cols-4 col-span-4">
             <router-link to="/" v-show="userRole !== 'ROLE_OWNER'">
-                <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
+                <!-- <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1> -->
+                <img src="@/assets/logo.png" class="h-[58px]">
             </router-link>
             <router-link to="/my-stores" v-show="userRole === 'ROLE_OWNER'">
-                <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1>
+                <!-- <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1> -->
+                <img src="@/assets/logo.png" class="h-[58px]">
             </router-link>
           </div>
       </div>
