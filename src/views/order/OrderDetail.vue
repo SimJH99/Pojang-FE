@@ -42,6 +42,10 @@
     },
     methods: {
       async executeOrder() {
+        if (!this.payment){
+          alert('결제수단을 선택해주세요!');
+          return;
+        }
         try{
           const storeId = localStorage.getItem('storeId');
           const selectedMenuDto = this.getCartMenus.map(menu => {
