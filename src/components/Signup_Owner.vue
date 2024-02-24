@@ -347,27 +347,6 @@ export default {
 background-color: #edf2f7; /* 컨테이너의 배경색 */
 }
 
-.disable-button {
-width: 17%;
-height: 42px;
-padding: 5px;
-border-radius: 4px;
-border: none;
-background-color: #DDE6ED;
-cursor: default;
-}
-
-.nickname-dupcheck-button {
-width: 17%;
-height: 42px;
-padding: 5px;
-border-radius: 4px;
-border: none;
-background-color: #FF4500;
-color: white;
-cursor: pointer;
-}
-
 form {
 width: 100%; /* 폼의 너비를 100%로 설정하여 화면에 꽉 차도록 함 */
 max-width: 450px; /* 최대 너비를 지정하여 너무 커지지 않도록 함 */
