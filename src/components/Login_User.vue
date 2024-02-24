@@ -24,7 +24,7 @@
       </form>
     </div>
     <div class="text-sm text-gray-600 mt-2">
-      <a href="/sign-up-owner" class="hover:underline">사장님 회원가입</a>
+      <a href="/sign-up-owner" class="hover:underline">사업자 회원가입</a>
     </div>
   </div>
 </template>
