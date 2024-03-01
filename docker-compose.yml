@@ -1,0 +1,13 @@
+# docker-compose 파일 포맷에 대한 버전
+version: '3.8'
+services:
+  # 포장의 민족 프론트엔드 프로젝트 이미지
+  pojang-front:
+    # image 이름과 버전을 명시
+    # package.json에 있는 프로젝트명(name)과 일치해야 함!
+    image: pojang-front:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
