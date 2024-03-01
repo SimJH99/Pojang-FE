@@ -96,7 +96,7 @@ export default {
             this.menuList = response.data.result.map(menu => ({...menu, quantity: 1}));
             console.log(this.menuList)
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
     mounted() {
