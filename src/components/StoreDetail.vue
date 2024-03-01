@@ -1,7 +1,7 @@
 <template>
   <div class="store-info p-4 bg-gray-100 rounded-lg shadow-md">
     <div class="store-header flex items-center">
-      <img :src="getImage(store.id)" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
+      <img :src="store.imageUrl" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
       <div class="store-info-text ml-4">
         <h2 class="store-name text-2xl font-bold">{{ store.name }}</h2>
         <div class="rating text-sm text-gray-500 mt-2 flex items-center" style="font-size: 1.5em; background: none; border: none;">

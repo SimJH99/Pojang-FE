@@ -11,7 +11,7 @@
         </div>
         <div class="w-5/6 p-8 flex flex-col">
             <h2 class="text-3xl font-semibold mb-6 text-gray-800">매장 등록</h2>
-            <form class=""  @submit.prevent="createStore">
+            <form class=""  @submit.prevent="createStore" enctype ="multipart/form-data">
                 <div class="bg-white p-4 rounded-md">
                   <label class="block text-lg font-bold text-gray-600">매장명</label>
                   <input v-model="name" type="text" class="mt-1 p-3 border rounded-md w-full">

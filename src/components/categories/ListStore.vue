@@ -4,7 +4,7 @@
   :class="{'p-4 border border-gray-300 rounded-md flex items-center mx-2 my-1':store.status === 'OPEN',
   'p-4 border border-gray-300 bg-gray-100 rounded-md flex items-center mx-2 my-1':store.status === 'CLOSED',
   }">
-  <img :src="getImage(store.id)" :class="{'w-[70px] h-[70px] bg-gray-100 object-cover mb-2 rounded-md mr-4': store.status === 'OPEN',
+    <img :src="store.imageUrl" :class="{'w-[70px] h-[70px] bg-gray-100 object-cover mb-2 rounded-md mr-4': store.status === 'OPEN',
   'w-[70px] h-[70px] bg-gray-100 object-cover mb-2 rounded-md mr-4 brightness-50': store.status === 'CLOSED', }
   ">
   <div>
@@ -70,10 +70,6 @@ const scrollPagination = async () => {
     await fetchData(); // 하단에 도달하면 더 많은 데이터를로드합니다.
   }
 };
-// 이미지 조회 함수
-const getImage = (id) => {
-  return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`
-};
 
 // 목록조회 함수
 async function fetchData() {
@@ -86,6 +82,7 @@ async function fetchData() {
       size : pageSize
     };
     const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/`, { params });
+    console.log(response);
     const addStoreList = response.data.result;
     if (addStoreList.length < pageSize) {
       isLastPage = true;

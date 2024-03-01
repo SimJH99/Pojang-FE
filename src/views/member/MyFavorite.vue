@@ -18,8 +18,7 @@
       <div v-if="favorites.length > 0" class="bg-white p-4 rounded-md">
         <ul>
           <li v-for="favorite in favorites" class="mb-2" :key="favorite.id">
-            <img :src="getImage(favorite.storeId)" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
-            <!-- <h3 class="text-xl font-semibold text-gray-800 mb-2">찜 번호: {{ favorite.id }}</h3> -->
+            <img :src="favorite.imageUrl" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
             <div>
               <p class="text-gray-600">{{ favorite.storeName }}</p>
               <p class="text-gray-600">{{ favorite.category }}</p>
@@ -57,9 +56,6 @@ export default {
         console.log(error);
       }
     },
-    getImage(id) {
-            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
-        },
   },
 };
 </script>

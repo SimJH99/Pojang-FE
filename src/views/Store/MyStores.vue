@@ -16,11 +16,10 @@
 
 
         <router-link v-for="store in stores" :key="store.id" class="bg-white rounded-md shadow-md p-6" :to="MyStoreInfoId(store.id)">
-          <!-- <h3 class="text-xl font-semibold text-gray-800 mb-2">매장 등록 번호: {{ store.id }}</h3> -->
           <a href="/my-store-info">
             <div class="bg-white rounded-md shadow-md p-6" flex>
               <div class="flex items-center mb-2">
-                <img :src="getImage(store.id)" class="h-24 w-auto object-cover mb-2 rounded-md mr-4">
+                <img :src="store.imageUrl" class="h-24 w-auto object-cover mb-2 rounded-md mr-4">
                 <div>
                   <p class="text-xl font-semibold text-gray-700 mb-2">{{ store.name }}</p>
                   <p class="text-l font-semibold text-gray-600 mb-2">{{ store.category }}</p>
@@ -69,9 +68,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    getImage(id) {
-      return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
     },
     MyStoreInfoId(StoreId){
       return { path: `/${StoreId}/my-store-info`, params: {id: StoreId}}
