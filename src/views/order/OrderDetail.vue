@@ -19,13 +19,11 @@
           </div>
           <button @click="executeOrder" class="bg-blue-500 text-white p-2 rounded-md">결제하기</button>
         </div>
-      <!-- <OrderCart/> -->
     </div>
   </template>
   
   <script>
   import {mapGetters} from 'vuex';
-  // import OrderCart from '@/views/order/OrderCart.vue';
   import axios from 'axios'; 
   export default {
     components: {
@@ -50,8 +48,8 @@
           const storeId = localStorage.getItem('storeId');
           const selectedMenuDto = this.getCartMenus.map(menu => {
               return {
-                  menuId: menu.id,
-                  quantity: menu.quantity,
+                  menuId: menu.menuId,
+                  quantity: menu.menuQuantity,
                   selectedMenuOptions: menu.selectedMenuOptions
               }
           })
@@ -81,8 +79,6 @@
           console.log(error);
           alert(error);
         }
-        // 여기에 폼 제출 로직 추가
-        console.log('폼이 제출되었습니다.');
       },
     }
 }

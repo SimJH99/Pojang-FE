@@ -21,15 +21,15 @@ export default createStore({
     mutations: {
         addToCart(state, orderInfo){
             console.log("mutations 진입!");
-            const existOrderInfo = state.cartMenus.find(m => m.id == orderInfo.id);
+            const existOrderInfo = state.cartMenus.find(m => m.menuId == orderInfo.menuId);
             if (existOrderInfo){
-                existOrderInfo.quantity += orderInfo.quantity;
-                existOrderInfo.price += orderInfo.price;
+                existOrderInfo.menuQuantity += orderInfo.menuQuantity;
+                existOrderInfo.totalPrice += orderInfo.totalPrice;
             } else {
                 state.cartMenus.push(orderInfo);
             }
-            state.totalPrice = parseInt(state.totalPrice) + orderInfo.price;
-            state.totalQuantity = parseInt(state.totalQuantity) + orderInfo.quantity;
+            state.totalPrice = parseInt(state.totalPrice) + orderInfo.totalPrice;
+            state.totalQuantity = parseInt(state.totalQuantity) + orderInfo.menuQuantity;
             state.storeId = orderInfo.storeId;
             updateLocalStorage(state.cartMenus, state.totalPrice, state.totalQuantity, state.storeId);
         }, 
