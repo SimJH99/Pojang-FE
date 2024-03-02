@@ -14,18 +14,20 @@
             <!-- 내 정보 -->
             <h2 class="text-3xl font-semibold mb-6 text-gray-800">매장 정보</h2>
             <div class="flex space-x-5 text-left mt-8">
-                <button @click="clickId = 1" class="hover:bg-blue-300 bg-blue-400 px-4 py-2 rounded text-white">상세조회</button>
-                <button @click="clickId = 2" class="hover:bg-red-300 bg-red-400 px-4 py-2 rounded text-white">메뉴등록</button>
+                <button @click="clickId = 1" class="hover:bg-blue-300 bg-blue-400 px-4 py-2 rounded text-white">매장 상세</button>
+                <button @click="clickId = 2" class="hover:bg-red-300 bg-red-400 px-4 py-2 rounded text-white">메뉴 목록</button>
                 <button @click="clickId = 3" class="hover:bg-green-300 bg-green-400 px-4 py-2 rounded text-white">주문 내역</button>
             </div>
             <hr class="my-3 border-2 border-slate-500">
             <div v-if="clickId == 3">
                 <StoreOrders 
-                :storeId = this.id
+                :storeId="storeInfo.id"
                 />
             </div>
             <div v-if="clickId == 2">
-                <MyStoreMenuCreate />
+                <MyStoreMenuCreate 
+                :storeId="storeInfo.id"
+                />
             </div>
             <div v-if="clickId == 1">
                 <div class="mb-4 bg-white p-4 rounded-md flex flex-col">

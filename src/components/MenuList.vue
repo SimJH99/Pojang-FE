@@ -1,8 +1,8 @@
 <template>
-    <li v-for="menu in menuList" :key="menu.id" class="menu-item flex mt-4 border-b pb-4" @click="openModal(menu)">
+    <li v-for="menu in menuList" :key="menu.menuId" class="menu-item flex mt-4 border-b pb-4" @click="openModal(menu)">
         <img :src="menu.imageUrl" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
         <div class="menu-info ml-4">
-            <h4 class="menu-name text-lg font-bold">{{ menu.name }}</h4>
+            <h4 class="menu-name text-lg font-bold">{{ menu.menuName }}</h4>
             <div class="menu-price text-sm text-gray-500 mt-1">{{ menu.price }}원</div>
         </div>
     </li>
@@ -18,20 +18,21 @@
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                             <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                                {{ selectedMenu.name }}
+                                {{ selectedMenu.menuName }}
                             </h2>
                             <h2 class="text-sm text-gray-500 mt-3 ml-2">소개: {{ selectedMenu.info }}</h2>
                             <div class="mt-4">
                                 <div class="text-sm text-gray-500">
                                     <h3>옵션 선택</h3>
                                     <ul>
-                                        <li v-for="menuOptionGroup in menuOptionGroups" :key="menuOptionGroup.id">
+                                        <li v-for="optionGroup in optionGroups" :key="optionGroup.optionGroupid">
                                             <br>
-                                            {{ menuOptionGroup.name }}
+                                            {{ optionGroup.optionGroupName }}
                                             <ul>
-                                                <li v-for="option in menuOptionGroup.menuOptions" :key="option.id">
-                                                    <input type="checkbox" v-model="selectedMenuOptions[option.id]" @change="handleCheckboxChange($event, option.price)"/>
-                                                    {{ option.name }}: {{ option.price }}
+                                                <li v-for="option in optionGroup.options" :key="option.optionId">
+                                                    <input type="checkbox" v-model="selectedMenuOptions[option.optionId]"
+                                                        @change="handleCheckboxChange($event, option.price)" />
+                                                    {{ option.optionName }}: {{ option.price }}
                                                 </li>
                                             </ul>
                                         </li>
@@ -39,7 +40,8 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                주문 수량: <input type="number" v-model="selectedMenu.quantity" min="1" @change="handleQuantityChange" style="width: 60px;"/>
+                                주문 수량: <input type="number" v-model="selectedMenu.quantity" min="1"
+                                    @change="handleQuantityChange" style="width: 60px;" />
                             </div>
                             <div class="mt-5">
                                 총 주문 금액: {{ totalPrice }}원
@@ -67,12 +69,12 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 export default {
-    props:['storeId', 'status'],
+    props: ['storeId', 'status'],
     data() {
         return {
             menuList: [],
-            menuOptionGroups: [],
-            menuOptions: [],
+            optionGroups: [],
+            options: [],
             selectedMenuOptions: {},
             prevSelectedMenuOptions: {},
             selectedMenuOptionGroup: null,
@@ -93,10 +95,10 @@ export default {
         try {
             console.log("this.storeId : " + this.storeId)
             const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus`);
-            this.menuList = response.data.result.map(menu => ({...menu, quantity: 1}));
+            this.menuList = response.data.result.map(menu => ({ ...menu, quantity: 1 }));
             console.log(this.menuList)
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
     mounted() {
@@ -106,48 +108,48 @@ export default {
     },
     methods: {
         ...mapActions(['addToCart']),
-        handleCheckboxChange(event, price){
-            if (event.target.checked){
+        handleCheckboxChange(event, price) {
+            if (event.target.checked) {
                 this.totalPrice += price;
             } else {
                 this.totalPrice -= price;
             }
-            
+
         },
-        handleQuantityChange(){
+        handleQuantityChange() {
             this.totalPrice = this.selectedMenu.price * this.selectedMenu.quantity;
         },
-        addCart(){
+        addCart() {
             const options = Object.keys(this.selectedMenuOptions)
-            .filter(key => this.selectedMenuOptions[key] === true)
-            .map(key => parseInt(key));
-            try{
+                .filter(key => this.selectedMenuOptions[key] === true)
+                .map(key => parseInt(key));
+            try {
                 const token = localStorage.getItem('token');
-                if (token == null){
+                if (token == null) {
                     alert("로그인이 필요합니다.");
-                    this.$router.push({name : "Login"});
+                    this.$router.push({ name: "Login" });
                     return;
                 }
                 const orderInfo = {
-                    id : this.selectedMenu.id,
-                    storeId : this.storeId,
-                    name: this.selectedMenu.name,
+                    id: this.selectedMenu.menuId,
+                    storeId: this.storeId,
+                    name: this.selectedMenu.menuName,
                     quantity: this.selectedMenu.quantity,
                     price: this.totalPrice,
                     // selectedMenuOptions: this.selectedMenuOptions,
                     selectedMenuOptions: options,
                 };
                 console.log(orderInfo);
-                
-                if (confirm("메뉴를 장바구니에 담으시겠습니까?")){
+
+                if (confirm("메뉴를 장바구니에 담으시겠습니까?")) {
                     this.$store.dispatch('addToCart', orderInfo);
                     console.log("store 진입!");
                     alert("장바구니에 메뉴를 담았습니다.");
                     window.location.reload();
                 }
-            } catch(error){
+            } catch (error) {
                 const errorMessage = error.response.data.message;
-                if (errorMessage){
+                if (errorMessage) {
                     console.log(errorMessage);
                     alert(errorMessage);
                 }
@@ -160,19 +162,19 @@ export default {
             this.selectedMenu = menu;
             this.totalPrice = this.selectedMenu.price;
             this.selectedMenuOptions = {};
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus/${this.selectedMenu.id}`);
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus/${this.selectedMenu.menuId}`);
             console.log(response.data.result);
-            this.menuOptionGroups = response.data.result.menuOptionGroups;
+            this.optionGroups = response.data.result.optionGroups;
             this.isModalOpen = true;
         },
         closeModal() {
             this.selectedMenu = null;
             this.isModalOpen = false;
             this.selectedMenuOptionGroup = {};
-            this.menuOptionGroups = [];
+            this.optionGroups = [];
         },
         async fetchMenu() {
-            
+
         }
     }
 }

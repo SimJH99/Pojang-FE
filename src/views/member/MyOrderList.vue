@@ -30,7 +30,7 @@
           <div class="w-1/3">
             <h3 class="text-xl font-semibold text-gray-800 mb-2">주문 번호: {{ order.orderId }}</h3>
             <p class="text-gray-600">가게명: {{ order.store }}</p>
-            <p class="text-gray-600"><img :src="getImage(order.storeId)" class="h-24 w-auto mt-2"></p>
+            <p class="text-gray-600"><img :src="order.storeImageUrl" class="h-24 w-auto mt-2"></p>
           </div>
           <div class="w-2/3 ml-4">
             <p class="text-gray-600">주문 상태: {{ order.orderStatus }}</p>
@@ -140,9 +140,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    getImage(id) {
-      return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
     },
     openModal(orderId) {
       this.orderId = orderId;
