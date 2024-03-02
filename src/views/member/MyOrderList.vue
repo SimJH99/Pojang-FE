@@ -29,22 +29,25 @@
         <div v-for="order in orders" :key="order.id" class="bg-white rounded-md shadow-md p-6 flex">
           <div class="w-1/3">
             <h3 class="text-xl font-semibold text-gray-800 mb-2">주문 번호: {{ order.orderId }}</h3>
-            <p class="text-gray-600">가게명: {{ order.store }}</p>
-            <p class="text-gray-600"><img :src="order.storeImageUrl" class="h-24 w-auto mt-2"></p>
+            <p class="text-gray-600"> {{ order.store }}</p>
+            <img :src="order.storeImageUrl" class="h-24 w-auto mt-2 rounded">
           </div>
           <div class="w-2/3 ml-4">
-            <p class="text-gray-600">주문 상태: {{ order.orderStatus }}</p>
-            <p class="text-gray-600">주문 일자: {{ order.orderDateTime }}</p>
-            <p class="text-gray-600"><span class="text-gray-700 font-bold">메뉴</span>
-            <ul>
-              <li v-for="(quantity, menuName) in order.orderMenuInfo" :key="menuName">
-                <span class="text-gray-600 font-bold">{{ menuName }} / </span> (수량: {{ quantity }})
-                <span v-for="(options, menuName) in order.orderMenuOptions" :key="menuName">옵션 : <span
-                    v-for="option in options" :key="option"> {{ option }} &nbsp;</span> </span>
-              </li>
-            </ul>
+            <p class="text-gray-600">- 주문 상태: <span class="font-semibold">{{ order.orderStatus }}</span></p>
+            <p class="text-gray-600">- 주문 일자: <span class="font-semibold">{{ order.orderDateTime }}</span></p>
+            <p class="text-gray-600">
+              <span class="text-gray-700 font-bold">- 메뉴</span>
+              <ul>
+                <li v-for="menu in order.orderMenus" :key="menu.orderMenuId" class="pl-2">
+                  <span class="text-gray-600 font-bold">{{ menu.menuName }}</span> ({{ menu.quantity }}개)
+                  <ul v-for="option in menu.orderMenuOptions" :key="option.orderMenuOptionId" class="pl-4">
+                    <li class="text-sm text-gray-500"> {{ option.optionName }}</li>
+                  </ul>
+                </li>
+              </ul>
             </p>
-            <p class="text-gray-800 font-bold mt-2">총 주문 금액: {{ order.totalPrice }}원</p><br />
+            <p class="text-gray-600">- 요청 사항: <span v-if="order.requirement">{{ order.requirement }}</span><span v-else>요청 사항 없음</span></p>
+            <h4 class="text-gray-800 font-bold mt-2">- 총 주문 금액: {{ order.totalPrice }}원</h4>
             <button v-if="!order.hasReview && order.orderStatus == '픽업완료'"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
               @click="openModal(order.orderId)">리뷰 작성</button>

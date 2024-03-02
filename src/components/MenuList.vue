@@ -114,30 +114,37 @@ export default {
             } else {
                 this.totalPrice -= price;
             }
-
         },
         handleQuantityChange() {
             this.totalPrice = this.selectedMenu.price * this.selectedMenu.quantity;
         },
-        addCart() {
+        async addCart() {
             const options = Object.keys(this.selectedMenuOptions)
                 .filter(key => this.selectedMenuOptions[key] === true)
                 .map(key => parseInt(key));
+            console.log(options);
+            const params = {
+                optionIds: options
+            };
             try {
                 const token = localStorage.getItem('token');
+                const headers = { Authorization: `Bearer ${token}` };
                 if (token == null) {
                     alert("로그인이 필요합니다.");
                     this.$router.push({ name: "Login" });
                     return;
                 }
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/options`, params, {headers});
+                console.log(response);
                 const orderInfo = {
-                    id: this.selectedMenu.menuId,
+                    menuId: this.selectedMenu.menuId,
                     storeId: this.storeId,
-                    name: this.selectedMenu.menuName,
-                    quantity: this.selectedMenu.quantity,
-                    price: this.totalPrice,
+                    menuName: this.selectedMenu.menuName,
+                    menuPrice: this.selectedMenu.price,
+                    menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
+                    totalPrice: this.totalPrice,
+                    selectedMenuOptions: response.data.result,
                     // selectedMenuOptions: this.selectedMenuOptions,
-                    selectedMenuOptions: options,
                 };
                 console.log(orderInfo);
 

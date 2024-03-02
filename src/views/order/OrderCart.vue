@@ -5,24 +5,31 @@
             <h2 class="text-3xl font-semibold mb-6 text-gray-800">주문표</h2>
             <div v-if="getCartMenus.length > 0" class="bg-white p-4 rounded-md">
                 <ul>
-                    <li class="mb-3" v-for="menu in getCartMenus" :key="menu.id">
+                    <li class="mb-3 p-4 bg-white rounded-lg shadow-md" v-for="menu in getCartMenus" :key="menu.menuId">
                         <ul>
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2"> {{ menu.name }}</h3>
-                                <li>
-                                    수량: {{ menu.quantity }}개
-                                </li>
-                                <li>
-                                    가격: {{ menu.price }}원
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ menu.menuName }}</h3>
+                            <li class="text-gray-600 mb-2">메뉴 가격 - <span class="font-medium">{{ menu.menuPrice }}원</span></li>
+                            <li class="text-gray-600 mb-2">수량 - <span class="font-medium">{{ menu.menuQuantity }}개</span></li>
+                            <li class="text-gray-600 mb-2" v-if="menu.selectedMenuOptions.length > 0">
+                                옵션
+                                <ul class="ml-4">
+                                    <li class="text-sm text-gray-500" v-for="option in menu.selectedMenuOptions" :key="option.id">
+                                        {{ option.name }} - {{ option.price }}원
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="text-gray-600">
+                                총 가격 - <span class="font-medium">{{ menu.totalPrice }}원</span>
                             </li>
                         </ul>
                     </li>
-                    <p class="text-gray-800 font-bold mt-5 mb-3">합계 금액: {{ getTotalPrice }}원</p>
+                    <p class="text-gray-800 font-bold mt-5 mb-3">합계 금액 {{ getTotalPrice }}원</p>
                 </ul>
-                <div class="mt-4" v-if="orederButton === 1">
+                <div class="mt-4" v-if="orderButton === 1">
                     <button @click="orderCart" class="bg-green-500 text-white p-2 mr-3 rounded-md">주문하기</button>
                     <button @click="clearCart" class="bg-blue-500 text-white p-2 rounded-md">장바구니 비우기</button>
                 </div>
-                <div v-if="orederButton === 2">
+                <div v-if="orderButton === 2">
                     <OrderDetail />
                 </div>
             </div>
@@ -44,13 +51,13 @@ export default {
     },
     data() {
         return {
-            orederButton: 1,
+            orderButton: 1,
         };
     },
     methods: {
         ...mapActions(['clearCart']),
         orderCart() {
-            this.orederButton = 2;
+            this.orderButton = 2;
         },
         clearCart() {
             // this.$store.commit('clearCart');
