@@ -3,7 +3,7 @@
         <li v-for="review in reviewList" :key="review.id" class="review-item mt-4 border-b pb-4">
             <div class="review-author text-lg font-bold">{{ review.nickname }}</div>
             <div class="review-rating text-sm text-yellow-500 mt-1">별점: {{ review.rating }}</div>
-            <img v-if="review.imageUrl" :src="getImage(review.id)" alt="리뷰 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
+            <img v-if="review.imageUrl" :src="review.imageUrl" alt="리뷰 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
             <div class="review-content text-sm text-gray-500 mt-2">{{ review.contents }}</div>
         </li>
     </ul>

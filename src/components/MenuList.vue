@@ -1,6 +1,6 @@
 <template>
     <li v-for="menu in menuList" :key="menu.id" class="menu-item flex mt-4 border-b pb-4" @click="openModal(menu)">
-        <img :src="getImage(menu.id)" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
+        <img :src="menu.imageUrl" alt="메뉴 이미지" class="menu-img w-16 h-16 object-cover rounded-lg">
         <div class="menu-info ml-4">
             <h4 class="menu-name text-lg font-bold">{{ menu.name }}</h4>
             <div class="menu-price text-sm text-gray-500 mt-1">{{ menu.price }}원</div>

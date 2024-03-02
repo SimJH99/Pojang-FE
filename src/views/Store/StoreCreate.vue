@@ -11,14 +11,14 @@
         </div>
         <div class="w-5/6 p-8 flex flex-col">
             <h2 class="text-3xl font-semibold mb-6 text-gray-800">매장 등록</h2>
-            <form class=""  @submit.prevent="createStore">
+            <form class=""  @submit.prevent="createStore" enctype ="multipart/form-data">
                 <div class="bg-white p-4 rounded-md">
                   <label class="block text-lg font-bold text-gray-600">매장명</label>
                   <input v-model="name" type="text" class="mt-1 p-3 border rounded-md w-full">
 
                   <label class="block text-lg font-bold text-gray-600 mt-4">매장 사진</label>
                   <input type="file" @change="handleImageUpload" accept="image/*" class="mt-1 p-3 border rounded-md w-full">
-                  <img v-if="storeImage" :src="Image" alt="선택된 이미지" class="mt-2 w-full rounded-md">
+                  <img v-if="storeImage" :src="Image" alt="선택된 이미지" class="mt-2 max-w-[300px] max-h-[300px] rounded-md">
 
                   <label class="block text-lg font-bold text-gray-600 mt-4">사업자 번호</label>
                   <input v-model="businessNumber" id="businessNumber" type="text" class="mt-1 p-3 border rounded-md w-full">

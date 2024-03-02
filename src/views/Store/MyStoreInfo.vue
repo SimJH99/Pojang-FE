@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <label class="block text-lg font-bold text-gray-600">매장 이미지</label>
-                        <img :src="getImage(storeInfo.id)" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
+                        <img :src="storeInfo.imageUrl" alt="매장 이미지" class="store-img w-48 h-48 object-cover rounded-lg">
                     </div>
                     <div>
                         <label class="block text-lg font-bold text-gray-600">찜 수</label> 
@@ -112,9 +112,6 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },
-        getImage(id) {
-            return `${process.env.VUE_APP_API_BASE_URL}/api/stores/${id}/image`;
         },
         MyStoreUpdateId(StoreId) {
             return { path: `/${StoreId}/store-update`, params: { id: StoreId } }
