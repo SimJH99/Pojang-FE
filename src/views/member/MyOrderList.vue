@@ -44,6 +44,7 @@
               </li>
             </ul>
             </p>
+            <p class="text-gray-600">요청 사항: {{ order.requirement }}</p>
             <p class="text-gray-800 font-bold mt-2">총 주문 금액: {{ order.totalPrice }}원</p><br />
             <button v-if="!order.hasReview && order.orderStatus == '픽업완료'"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
