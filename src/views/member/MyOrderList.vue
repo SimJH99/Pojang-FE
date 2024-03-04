@@ -26,7 +26,7 @@
       <h2 class="text-3xl font-semibold mb-6 text-gray-800">주문 내역</h2>
       <!-- 기록 내역 -->
       <div v-if="orders.length > 0" class="grid grid-cols-1 gap-4">
-        <div v-for="order in orders" :key="order.id" class="bg-white rounded-md shadow-md p-6 flex">
+        <div v-for="order in orders" :key="order.orderId" class="bg-white rounded-md shadow-md p-6 flex">
           <div class="w-1/3">
             <h3 class="text-xl font-semibold text-gray-800 mb-2">주문 번호: {{ order.orderId }}</h3>
             <p class="text-gray-600"> {{ order.store }}</p>
@@ -141,7 +141,7 @@ export default {
         }
         this.orders = orders;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     openModal(orderId) {
