@@ -44,18 +44,10 @@
       <!-- 주소 입력 -->
       <div class="mb-4">
         <label for="address" class="block text-sm font-semibold text-gray-800 mb-1">주소</label>
-        <div class="mb-2">
-          <label for="sido" class="sr-only">시도</label>
-          <input v-model="sido" type="sido" id="sido" name="sido" placeholder="시도" class="mt-1 p-2 w-full border rounded-md">
-        </div>
-        <div class="mb-2">
-          <label for="sigungu" class="sr-only">시군구</label>
-          <input v-model="sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구" class="mt-1 p-2 w-full border rounded-md">
-        </div>
-        <div class="mb-2">
-          <label for="query" class="sr-only">도로명</label>
-          <input v-model="query" type="text" id="query" name="query" placeholder="도로명" class="mt-1 p-2 w-full border rounded-md">
-        </div>
+          <input v-model="sido" type="sido" id="sido" name="sido" placeholder="시도" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+          <input v-model="sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+          <input v-model="bname" type="text" id="bname" name="bname" placeholder="도로명" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+          <a @click="openPostcode"><input v-model="roadAddress" type="text" id="roadAddress" name="roadAddress" placeholder="주소" class="mt-1 p-2 w-full border rounded-md" readonly></a>
       </div>
 
       <div class="mb-4">
@@ -83,7 +75,8 @@ export default {
       confirmPassword: '',
       sido: '',
       sigungu: '',
-      query: '',
+      bname: '',
+      roadAddress:'',
       phoneNumber: '',
       phoneValidMessage: '',
       phoneValidFlag: false,
@@ -257,21 +250,6 @@ export default {
         return;
       }
 
-      if (!this.sido) {
-        alert('시도를 입력하세요.');
-        return;
-      }
-
-      if (!this.sigungu) {
-        alert('시군구를 입력하세요.');
-        return;
-      }
-
-      if (!this.query) {
-        alert('도로명을 입력하세요.');
-        return;
-      }
-
       if (!this.confirmPassword) {
         alert('2차 비밀번호를 입력하세요');
         return;
@@ -298,7 +276,7 @@ export default {
       }
       try{
           const registerData = {nickname: this.nickname, email: this.email, password: this.password, 
-            sido: this.sido, sigungu: this.sigungu, query: this.query, phoneNumber: this.phoneNumber};
+            sido: this.sido, sigungu: this.sigungu, bname: this.bname, roadAddress:this.roadAddress, phoneNumber: this.phoneNumber};
           await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/members/sign-up/user`, registerData);
           alert("회원가입 완료");
           this.$router.push({name : 'Login'});
@@ -336,6 +314,16 @@ export default {
       this.emailtest = true;
       this.emailValidMessage = ''
     }
+  },
+  openPostcode() {
+      new window.daum.Postcode({
+          oncomplete: (data) => {
+              this.sido = data.sido;
+              this.sigungu = data.sigungu;
+              this.bname = data.bname;
+              this.roadAddress = data.roadAddress;
+          },
+      }).open();
   },
 }, 
 }

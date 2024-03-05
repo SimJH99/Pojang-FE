@@ -20,6 +20,15 @@
             <label class="block text-lg font-bold text-gray-600 mt-4">이메일</label>
             <input v-model="memberInfo.email" type="email" class="mt-1 p-3 border rounded-md w-full" disabled>
             <!-- 이메일은 수정 불가능하도록 disabled 속성 추가 -->
+
+            <div class="mb-4">
+              <label for="address" class="block text-lg font-bold text-gray-600 mt-4">주소</label>
+                <input v-model="memberInfo.sido" type="sido" id="sido" name="sido" placeholder="시도" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                <input v-model="memberInfo.sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                <input v-model="memberInfo.bname" type="text" id="bname" name="bname" placeholder="도로명" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                <a @click="openPostcode"><input v-model="memberInfo.roadAddress" type="text" id="roadAddress" name="roadAddress" placeholder="주소" class="mt-1 p-3 border rounded-md w-full" readonly></a>
+            </div>
+
             <div>
               <label class="block text-lg font-bold text-gray-600 mt-4">휴대폰번호</label>
               <input v-model="phoneNumber" type="tel" class="mt-1 p-3 border rounded-md w-full" @input="validatePhoneNumber">
@@ -59,6 +68,10 @@
           this.memberInfo = response.data.result;
           this.beforeNickname = this.memberInfo.nickName;
           this.beforepassword = this.memberInfo.password;
+          this.sido = this.memberInfo.sido;
+          this.sigungu = this.memberInfo.sigungu;
+          this.bname = this.memberInfo.bname;
+          this.roadAddress = this.memberInfo.roadAddress;
           this.phoneNumber = this.memberInfo.phoneNumber;
         } catch (error) {
           console.log(error);
@@ -102,7 +115,8 @@
           return;
         }
         try{
-            const registerData = {nickname: this.memberInfo.nickName, phoneNumber: this.phoneNumber};
+            const registerData = {nickname: this.memberInfo.nickName, phoneNumber: this.phoneNumber,
+                sido: this.memberInfo.sido, sigungu: this.memberInfo.sigungu, bname: this.memberInfo.bname, roadAddress: this.memberInfo.roadAddress};
             const token = localStorage.getItem('token');
             const headers = {Authorization: `Bearer ${token}`} 
             await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/api/members/my-info`, registerData, {headers});
@@ -111,7 +125,17 @@
         } catch(error){
           alert(error.response.data.message);
         }
-      }
+      },
+      openPostcode() {
+        new window.daum.Postcode({
+            oncomplete: (data) => {
+              this.memberInfo.sido = data.sido;
+              this.memberInfo.sigungu = data.sigungu;
+              this.memberInfo.bname = data.bname;
+              this.memberInfo.roadAddress = data.roadAddress;
+            },
+        }).open();
+      },
     },
   };
   </script>
