@@ -14,7 +14,7 @@
                                 옵션
                                 <ul class="ml-4">
                                     <li class="text-sm text-gray-500" v-for="option in menu.selectedMenuOptions" :key="option.id">
-                                        {{ option.name }} - {{ option.price }}원
+                                        {{ option.name }} - {{ option.price }}원 x {{ menu.menuQuantity }}
                                     </li>
                                 </ul>
                             </li>
