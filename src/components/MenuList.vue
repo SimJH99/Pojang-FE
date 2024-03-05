@@ -119,7 +119,6 @@ export default {
             // 메뉴 가격과 수량으로 총 가격을 먼저 계산
             this.totalPrice = this.selectedMenu.price * this.selectedMenu.quantity;
 
-            // 뤼튼 코드
             // 선택된 옵션들의 가격을 총 가격에 더해줌
             for (let optionId in this.selectedMenuOptions) {
                 // 선택된 옵션(true)만 처리하는 로직
