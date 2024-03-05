@@ -5,7 +5,7 @@ services:
   pojang-front:
     # image 이름과 버전을 명시
     # package.json에 있는 프로젝트명(name)과 일치해야 함!
-    image: pojang-front:v3
+    image: pojang-front:v1
     build:
       context: .
       dockerfile: Dockerfile
