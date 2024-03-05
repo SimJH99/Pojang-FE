@@ -25,29 +25,15 @@
                     <input v-model="businessNumber" id="businessNumber" type="text"
                         class="mt-1 p-3 border rounded-md w-full">
 
-                    <div class="mb-4 mt-3">
-                        <label for="address" class="block text-lg font-bold text-gray-600">주소</label>
-                        <div class="mb-2">
-                            <label for="sido" class="sr-only">시도</label>
-                            <input v-model="sido" type="text" id="sido" name="sido" placeholder="시도"
-                                class="mt-1 p-2 w-full border rounded-md">
-                        </div>
-                        <div class="mb-2">
-                            <label for="sigungu" class="sr-only">시군구</label>
-                            <input v-model="sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구"
-                                class="mt-1 p-2 w-full border rounded-md">
-                        </div>
-                        <div class="mb-2">
-                            <label for="query" class="sr-only">도로명</label>
-                            <input v-model="query" type="text" id="query" name="query" placeholder="도로명"
-                                class="mt-1 p-2 w-full border rounded-md">
-                        </div>
-                        <div class="mb-2">
-                            <label for="addressDetail" class="sr-only">상세 주소</label>
-                            <input v-model="addressDetail" type="text" id="addressDetail" name="addressDetail"
-                                placeholder="상세주소" class="mt-1 p-2 w-full border rounded-md">
-                        </div>
+                    <div class="mb-4">
+                        <label for="address" class="block text-sm font-semibold text-gray-800 mb-1">주소</label>
+                        <input v-model="sido" type="sido" id="sido" name="sido" placeholder="시도" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                        <input v-model="sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                        <input v-model="bname" type="text" id="bname" name="bname" placeholder="도로명" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                        <a @click="openPostcode"><input v-model="roadAddress" type="text" id="roadAddress" name="roadAddress" placeholder="주소" class="mt-1 p-2 w-full border rounded-md" readonly></a>
+                        <input v-model="addressDetail" type="text" id="addressDetail" name="addressDetail" placeholder="상세주소" class="mt-1 p-2 w-full border rounded-md">
                     </div>
+
                     <label class="block text-lg font-bold text-gray-600 mt-4">카테고리</label>
                     <select v-model="category" class="mt-1 p-3 border rounded-md w-full">
                         <option value="치킨">치킨</option>
@@ -92,7 +78,8 @@ export default {
             category: '',
             sido: '',
             sigungu: '',
-            query: '',
+            bname: '',
+            roadAddress:'',
             addressDetail: '',
             storeNumber: '',
             operationTime: '',
@@ -120,7 +107,8 @@ export default {
                 }
                 registerData.append("sido", this.sido);
                 registerData.append("sigungu", this.sigungu);
-                registerData.append("query", this.query);
+                registerData.append("bname", this.bname);
+                registerData.append("roadAddress", this.roadAddress);
                 registerData.append("addressDetail", this.addressDetail);
                 registerData.append("introduction", this.introduction);
                 let headers = {
@@ -146,12 +134,28 @@ export default {
                 }
                 else if (!this.operationTime) {
                     alert("운영시간을 입력하세요.")
+                }
+                else if (!this.roadAddress) {
+                    alert("주소를 입력해주세요")
+                }
+                else if (!this.addressDetail) {
+                    alert("상세 주소를 입력해주세요")
                 } else {
                     alert(error.response.data.message);
                 }
             }
             // 여기에 폼 제출 로직 추가
             console.log('폼이 제출되었습니다.');
+        },
+        openPostcode() {
+            new window.daum.Postcode({
+                oncomplete: (data) => {
+                    this.sido = data.sido;
+                    this.sigungu = data.sigungu;
+                    this.bname = data.bname;
+                    this.roadAddress = data.roadAddress;
+                },
+            }).open();
         },
     },
 }
