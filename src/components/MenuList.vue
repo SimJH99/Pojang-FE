@@ -110,13 +110,28 @@ export default {
         ...mapActions(['addToCart']),
         handleCheckboxChange(event, price) {
             if (event.target.checked) {
-                this.totalPrice += price;
+                this.totalPrice += price * this.selectedMenu.quantity;
             } else {
-                this.totalPrice -= price;
+                this.totalPrice -= price * this.selectedMenu.quantity;
             }
         },
         handleQuantityChange() {
+            // 메뉴 가격과 수량으로 총 가격을 먼저 계산
             this.totalPrice = this.selectedMenu.price * this.selectedMenu.quantity;
+
+            // 선택된 옵션들의 가격을 총 가격에 더해줌
+            for (let optionId in this.selectedMenuOptions) {
+                // 선택된 옵션(true)만 처리하는 로직
+                if (this.selectedMenuOptions[optionId]) {
+                    const option = this.optionGroups
+                        // 모든 옵션 그룹에서 옵션들만을 추출해서 새로운 배열을 만듬
+                        .flatMap(group => group.options)
+                        // 옵션 ID가 현재 선택된 옵션의 ID와 일치하는 옵션을 찾음
+                        .find(option => option.optionId == optionId);
+                    // 선택된 옵션의 가격과 선택된 메뉴의 수량을 곱한 값을 총 주문 금액에 더함
+                    this.totalPrice += option.price * this.selectedMenu.quantity;
+                }
+            }
         },
         async addCart() {
             const options = Object.keys(this.selectedMenuOptions)
@@ -134,6 +149,7 @@ export default {
                     this.$router.push({ name: "Login" });
                     return;
                 }
+                // MenuController(findOptionObjects) - 메뉴 옵션 객체 리스트 받아오기
                 const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/options`, params, {headers});
                 console.log(response);
                 const orderInfo = {
@@ -144,7 +160,6 @@ export default {
                     menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
                     totalPrice: this.totalPrice,
                     selectedMenuOptions: response.data.result,
-                    // selectedMenuOptions: this.selectedMenuOptions,
                 };
                 console.log(orderInfo);
 
@@ -168,15 +183,16 @@ export default {
         async openModal(menu) {
             this.selectedMenu = menu;
             this.totalPrice = this.selectedMenu.price;
-            this.selectedMenuOptions = {};
             const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/menus/${this.selectedMenu.menuId}`);
             console.log(response.data.result);
             this.optionGroups = response.data.result.optionGroups;
             this.isModalOpen = true;
         },
         closeModal() {
-            this.selectedMenu = null;
+            this.selectedMenu.quantity = 1; // 모달창 닫으면 선택된 메뉴의 수량 1로 리셋
+            // this.selectedMenu = null;
             this.isModalOpen = false;
+            this.selectedMenuOptions = {};
             this.selectedMenuOptionGroup = {};
             this.optionGroups = [];
         },
