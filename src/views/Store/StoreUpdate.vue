@@ -16,6 +16,15 @@
                   <label class="block text-lg font-bold text-gray-600">매장명</label>
                   <input v-model="name" id="name" type="text" class="mt-1 p-3 border rounded-md w-full">
 
+                  <div class="mb-4">
+                    <label for="address" class="block text-lg font-bold text-gray-600 mt-4">주소</label>
+                      <input v-model="storeInfo.sido" type="sido" id="sido" name="sido" placeholder="시도" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                      <input v-model="storeInfo.sigungu" type="text" id="sigungu" name="sigungu" placeholder="시군구" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                      <input v-model="storeInfo.bname" type="text" id="bname" name="bname" placeholder="도로명" class="mt-1 p-2 w-full border rounded-md" style="display: none;">
+                      <a @click="openPostcode"><input v-model="storeInfo.roadAddress" type="text" id="roadAddress" name="roadAddress" placeholder="주소" class="mt-1 p-2 w-full border rounded-md" readonly></a>
+                      <input v-model="storeInfo.addressDetail" type="text" id="addressDetail" name="addressDetail" placeholder="상세주소" class="mt-1 p-2 w-full border rounded-md">
+                  </div>
+
                   <label class="block text-lg font-bold text-gray-600 mt-4">카테고리</label>
                   <select v-model="category" class="mt-1 p-3 border rounded-md w-full">
                       <option value="치킨">치킨</option>
@@ -80,6 +89,10 @@ export default {
         this.name = this.storeInfo.name;
         this.businessNumber = this.storeInfo.businessNumber;
         this.sido = this.storeInfo.sido;
+        this.sigungu = this.storeInfo.sigungu;
+        this.bname = this.storeInfo.bname;
+        this.roadAddress = this.storeInfo.roadAddress;
+        this.addressDetail = this.storeInfo.addressDetail;
         this.category = this.storeInfo.category;
         this.storeNumber = this.storeInfo.storeNumber;
         this.operationTime = this.storeInfo.operationTime;
@@ -95,8 +108,9 @@ export default {
         try{
             const token = localStorage.getItem('token');
             const headers = { Authorization: `Bearer ${token}` };
-            const registerData = {name: this.name, businessNumber: this.businessNumber, category: this.category, 
-                storeNumber: this.storeNumber, operationTime: this.operationTime, introduction: this.introduction};
+            const registerData = {name:this.storeInfo.name, sido:this.storeInfo.sido, sigungu:this.storeInfo.sigungu, bname:this.storeInfo.bname, roadAddress:this.storeInfo.roadAddress, 
+              addressDetail:this.storeInfo.addressDetail, category:this.storeInfo.category, storeNumber:this.storeInfo.storeNumber, operationTime:this.storeInfo.operationTime,
+               introduction:this.introduction};
             await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.$route.params.id}`, registerData, {headers});
             alert("수정 완료");
             this.$router.push(`/${this.$route.params.id}/my-store-info`);
@@ -111,7 +125,17 @@ export default {
       
       // 파일 정보를 사용하거나 저장할 수 있음
       console.log(selectedFile);
-    }
+    },
+    openPostcode() {
+        new window.daum.Postcode({
+            oncomplete: (data) => {
+              this.storeInfo.sido = data.sido;
+              this.storeInfo.sigungu = data.sigungu;
+              this.storeInfo.bname = data.bname;
+              this.storeInfo.roadAddress = data.roadAddress;
+            },
+        }).open();
+      },
   },
 }
 </script>
