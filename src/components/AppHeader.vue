@@ -4,10 +4,10 @@
   <div class="w-full h-[84px] mx-auto max-w-[1400px] flex items-center justify-between px-4">
       <div class="flex items-center space-x-10">
           <div class="grid-cols-4 col-span-4">
-            <router-link to="/" v-show="userRole !== 'ROLE_OWNER'">
+            <button @click="doMain" v-show="userRole !== 'ROLE_OWNER'">
                 <!-- <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1> -->
                 <img src="@/assets/logo.png" class="h-[58px]">
-            </router-link>
+            </button>
             <router-link to="/my-stores" v-show="userRole === 'ROLE_OWNER'">
                 <!-- <h1 class="text-slate-50 font-sans text-2xl py-4 ml-2"><a herf="/">포장의민족</a></h1> -->
                 <img src="@/assets/logo.png" class="h-[58px]">
@@ -48,6 +48,9 @@ export default {
     methods: {
         doLogout(){
             localStorage.clear();
+            window.location.href = "/";
+        },
+        doMain(){
             window.location.href = "/";
         },
         Rolecheck(){
