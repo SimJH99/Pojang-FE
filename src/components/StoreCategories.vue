@@ -22,13 +22,15 @@
         </button>
       </div>
     </div>
-    <ListStore :category="selectedCategory" :searchName="searchName" />
+    <ListStore v-if="userRole" :category="selectedCategory" :searchName="searchName" />
+    <NotLogin  v-if="!userRole" />
   </div>
 </template>
 
 <script setup>
 // import HomeSearch from '@/components/HomeSearch.vue';
 import ListStore from '@/components/categories/ListStore.vue';
+import NotLogin from '@/components/categories/NotLogin.vue';
 import { ref } from 'vue';
 
 
@@ -47,11 +49,10 @@ const categories = [
 const searchName = ref('');
 let selectedCategory = ref(null);
 const searchInput = ref('');
-
+const userRole = localStorage.getItem("role");
 const selectCategory = (category) => {
   selectedCategory.value = category.category;
 };
-
 // 검색 수행 함수
 const performSearch = () => {
   selectedCategory.value = '';
