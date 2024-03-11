@@ -32,12 +32,13 @@
 <script>
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-
+// import { EventSourcePolyfill } from 'event-source-polyfill';
 export default {
     data(){
         return{
             email: '',
-            password: ''
+            password: '',
+            eventSource: null, // 이벤트 소스 객체
         }
     },
     methods: {
@@ -59,7 +60,25 @@ export default {
                     localStorage.setItem("email", decoded.sub);
                     localStorage.setItem("role", decoded.role);
                     localStorage.setItem("token", token);
-                    console.log(decoded.role)
+                    console.log(decoded.role);
+
+                    // let lastEventId = localStorage.getItem('lastEventId');
+                    // const url = `${process.env.VUE_APP_API_BASE_URL}/subscribe`;
+                    // const eventSourceInitDict = {
+                    //   headers: {
+                    //     'Authorization': `Bearer ${token}`,
+                    //     'Last-Event-ID': lastEventId,
+                    //   },
+                    //   heartbeatTimeout: 30000,
+                    // };
+                    // this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
+                    // this.eventSource.onmessage = (event) => {
+                    //   console.log(event); 
+                    // }
+                    // this.eventSource.onerror = (event) => {
+                    //   console.error('EventSource failed:', event);
+                    //   this.eventSource.close();
+                    // };
                     if(decoded.role == 'ROLE_OWNER') {
                       window.location.href = "/my-stores"
                     }else {
@@ -69,6 +88,7 @@ export default {
                     console.log("200 ok but not token");
                     alert("Login Failed");
                 }
+
             } catch(error){
                 alert(error.response.data.message); 
             }
