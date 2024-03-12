@@ -10,8 +10,8 @@
             </div>
             <button type="submit" class="bg-black text-white px-4 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800 w-full">
               이메일 찾기
-            </button> 
-          </form> 
+            </button>
+          </form>
         </div>
       </div>
 </template>
