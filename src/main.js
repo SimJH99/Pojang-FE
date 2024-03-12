@@ -11,6 +11,7 @@ const app = createApp(App);
 axios.interceptors.response.use(response => response, error =>{
   if(error.response && error.response.status === 401){
     localStorage.clear();
+    alert("로그인이 만료되었습니다.");
     window.location.href = "/login";
   }
   return Promise.reject(error);
