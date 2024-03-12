@@ -45,19 +45,61 @@
 <script>
 import axios from 'axios';
 import MyStoreInfo from '@/views/Store/MyStoreInfo';
+import { EventSourcePolyfill } from 'event-source-polyfill';
 export default {
   data() {
     return {
       stores: [],
+      eventSource: null, // 이벤트 소스 객체
     };
   },
   created() {
     this.fetchOrders();
   },
+  mounted(){
+    this.connectToSSE(); // SSE 연결
+  },
+  beforeUnmount() {
+    // 컴포넌트 해제 전에 SSE 연결 종료
+    if (this.eventSource) {
+      this.eventSource.close();
+    }
+  },
   methods: {
     components:{
       MyStoreInfo
-    },  
+    },
+    connectToSSE() {
+      const token = localStorage.getItem('token');
+      let lastEventId = localStorage.getItem('lastEventId') || '';
+      const url = `${process.env.VUE_APP_API_BASE_URL}/subscribe`;
+      const eventSourceInitDict = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Last-Event-ID': lastEventId,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'X-Accel-Buffering': 'no',
+          heartbeatTimeout: 120000,
+        },
+      };
+      this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
+      // this.eventSource.addEventListener('SSE', (event) => {
+      //   console.log(event);
+      // });
+      // server에서 sseEmitter send할 때, name이 없으면 
+      // addEventListener 대신 아래 코드 사용
+      this.eventSource.onmessage = (event) => {
+        console.log(event.data);
+        console.log("Json 형변환 " + JSON.stringify(event.data));
+        // alert(event.data);
+      }
+      this.eventSource.onerror = (error) => {
+        console.log(error);
+        this.eventSource.close();
+      };
+    },
     async fetchOrders() {
       try {
         const token = localStorage.getItem('token');
