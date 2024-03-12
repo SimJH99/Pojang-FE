@@ -35,8 +35,11 @@
               <div v-if="phoneError" class="text-red-500 text-xs mt-1">{{ phoneError }}</div>
             </div>
 
-            <button type="submit" class="bg-black text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800">
+            <button type="submit" class="bg-black text-white px-4 py-2 rounded-md mt-4 mr-2 hover:bg-gray-900 focus:outline-none focus:shadow-outline-gray active:bg-gray-800">
               저장
+            </button>
+            <button type="button" @click="withdraw" class="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-red-700 focus:outline-none focus:shadow-outline-gray active:bg-red-400">
+              회원탈퇴
             </button>
           </div>
         </form>
@@ -136,6 +139,18 @@
             },
         }).open();
       },
+      withdraw(){
+        if(window.confirm("회원 탈퇴 하시겠습니까?")){
+          if(window.confirm("탈퇴 시 회원정보가 전부 삭제됩니다.")){
+            if(window.confirm("정말로 탈퇴 하시겠습니까?")){
+              if(window.confirm("진심으로 탈퇴 하시겠습니까?")){
+                alert("응 너 못나가~ (ಠ‿↼)");
+              }
+            }
+          }
+        }
+        return;
+      }
     },
   };
   </script>
