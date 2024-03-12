@@ -20,7 +20,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from 'vuex';
 import axios from 'axios';
@@ -61,40 +60,10 @@ export default {
           this.$router.push({ name: "Login" });
           return;
         }
-        try{
-          const storeId = localStorage.getItem('storeId');
-          const selectedMenuDto = this.getCartMenus.map(menu => {
-              return {
-                  menuId: menu.menuId,
-                  quantity: menu.menuQuantity,
-                  selectedMenuOptions: menu.selectedMenuOptions
-              }
-          })
-          const orderDto = {
-              payment: this.payment,
-              requirement: this.requirement,
-              totalPrice: this.getTotalPrice,
-              selectedMenus: selectedMenuDto
-          }
-          const token = localStorage.getItem('token');
-          if (token == null){
-              alert("로그인이 필요합니다.");
-              this.$router.push({name : "Login"});
-              return;
-          }
-          const headers = {Authorization: `Bearer ${token}`};
-          if (!confirm("정말로 주문하시겠습니까?")){
-            alert("주문 취소");
-            return;
-          }
-          console.log(orderDto)
-          await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${storeId}/orders`, orderDto, {headers});
-          alert("주문 완료");
-          this.$store.dispatch('clearCart');
-          window.location.href = "/";
-        } catch(error){
-          console.log(error);
-          alert(error.response.data.message);
+        const headers = { Authorization: `Bearer ${token}` };
+        if (!confirm("정말로 주문하시겠습니까?")) {
+          alert("주문 취소");
+          return;
         }
         console.log(orderDto)
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${storeId}/orders`, orderDto, { headers });
@@ -108,9 +77,7 @@ export default {
     },
   }
 }
-
 </script>
-
 <style scoped>
 form {
   width: 100%;
