@@ -24,7 +24,6 @@
                 <a v-if="isLogin && userRole === 'ROLE_USER'" href="/cart"
                     class="rounded-md hover:bg-orange-400 text-slate-50 bg-orange-500 p-2 px-8">주문표({{ getTotalQuantity }})</a>
                 <div v-if="isLogin" class="relative">
-                    <img v-if="isLogin" src="@/assets/no_alarm.png" class="h-[58px]">
                     <span v-if="notifCount > 0"
                         class="absolute top-0 right-0 bg-red-500 rounded-full text-white text-sm w-5 h-5 flex items-center justify-center">{{ notifCount }}</span>
                 </div>

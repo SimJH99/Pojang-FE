@@ -134,6 +134,13 @@ export default {
             }
         },
         async addCart() {
+            const selectedStoreId = localStorage.getItem('storeId');
+            if (!(selectedStoreId == 0 || !selectedStoreId)){
+                if (this.selectedMenu.storeId != selectedStoreId){
+                    alert("동일한 가게에서만 주문이 가능합니다.");
+                    return;
+                }
+            }
             const options = Object.keys(this.selectedMenuOptions)
                 .filter(key => this.selectedMenuOptions[key] === true)
                 .map(key => parseInt(key));
@@ -153,13 +160,13 @@ export default {
                 const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/options`, params, {headers});
                 console.log(response);
                 const orderInfo = {
-                    menuId: this.selectedMenu.menuId,
-                    storeId: this.storeId,
-                    menuName: this.selectedMenu.menuName,
-                    menuPrice: this.selectedMenu.price,
-                    menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
-                    totalPrice: this.totalPrice,
-                    selectedMenuOptions: response.data.result,
+                        menuId: this.selectedMenu.menuId,
+                        storeId: this.storeId,
+                        menuName: this.selectedMenu.menuName,
+                        menuPrice: this.selectedMenu.price,
+                        menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
+                        totalPrice: this.totalPrice,
+                        selectedMenuOptions: response.data.result,
                 };
                 console.log(orderInfo);
 
