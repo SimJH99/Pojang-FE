@@ -114,6 +114,9 @@ export default {
   },
   methods: {
     openModal() {
+      this.name = ""
+      this.menuInfo = ""
+      this.price = ""
       this.isModalOpen = true;
     },
     closeModal() {
@@ -160,6 +163,9 @@ export default {
     openOptionModal(menu) {
       this.selectedMenu = menu;
       this.menuOptions = [];
+      this.option = ""
+      this.optionPrice = ""
+      this.optionGroup = ""
       this.isOptionModalOpen = true;
     },
     closeOptionModal() {
