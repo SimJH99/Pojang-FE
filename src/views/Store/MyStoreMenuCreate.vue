@@ -1,16 +1,26 @@
 <template>
-  <div >
+  <div>
     <button @click="openModal" class="bg-blue-500 text-white py-2 px-4 rounded">메뉴 등록</button>
     <!-- 메뉴 리스트 -->
     <div class="menu-list">
       <div v-for="menu in menus" :key="menu.menuId" class="card">
-        <div class="card-body flex mb-2 border-b-4 relative">
+        <div @click="toggleOptions(menu.menuId)" style="cursor: pointer"
+          class="card-body flex mb-2 border-b-4 relative">
           <img :src="menu.imageUrl" class="card-img-top w-[100px] h-[100px] mr-4 mb-2" />
           <div>
             <h5 class="card-title">{{ menu.menuName }}</h5>
             <p class="card-text">{{ menu.info }}</p>
             <p class="card-text"><strong>{{ menu.price }}원</strong></p>
           </div>
+          <div v-if="visibleOptions.has(menu.menuId)" class="options-container">
+            <div v-for="optionGroup in menu.optionGroups" :key="optionGroup.optionGroupId" class="option-group">
+              {{ optionGroup.optionGroupName }}
+              <p v-for="option in optionGroup.options" :key="option.optionId" class="option">
+                {{ option.optionName }} : {{ option.price }} 원
+              </p>
+            </div>
+          </div>
+
           <!-- 옵션 추가 버튼 -->
           <button @click="openOptionModal(menu)"
             class="bg-green-500 text-white py-2 px-4 rounded absolute top-0 right-0 mt-2">옵션 추가</button>
@@ -99,6 +109,7 @@ export default {
       selectedMenu: null, // 선택된 메뉴
       menuOptions: [], // 선택된 메뉴의 옵션 목록
       menus: [],
+      visibleOptions: new Set(),
     };
   },
   async created() {
@@ -113,6 +124,13 @@ export default {
     }
   },
   methods: {
+    toggleOptions(menuId) {
+      if (this.visibleOptions.has(menuId)) {
+        this.visibleOptions.delete(menuId); // 펼쳐진 토글을 닫음
+      } else {
+        this.visibleOptions.add(menuId); // 숨겨진 토글을 펼침
+      }
+    },
     openModal() {
       this.name = ""
       this.menuInfo = ""
@@ -180,7 +198,7 @@ export default {
       if (confirm("메뉴 옵션을 등록하시겠습니까?")) {
         try {
           const token = localStorage.getItem('token');
-          const headers = {Authorization: `Bearer ${token}`}; 
+          const headers = { Authorization: `Bearer ${token}` };
           if (token == null) {
             alert("로그인이 필요합니다.");
             this.$router.push({ name: "Login" });
@@ -203,3 +221,23 @@ export default {
   },
 };
 </script>
+
+<style>
+.options-container {
+  transition: all 0.3s ease;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.option-group {
+  margin-bottom: 10px;
+}
+.option-group-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.option {
+  padding: 5px 0;
+}
+</style>
