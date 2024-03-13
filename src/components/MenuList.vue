@@ -14,41 +14,40 @@
             </div>
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                <div class="bg-slate-200 ">
+                    <div class="sm:flex sm:items-st">
+                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                            <p class="bg-white text-2xl leading-6 font-bold text-gray-900 border-b-2 border-gray-400 pl-3 pb-5 pt-5" id="modal-headline">
                                 {{ selectedMenu.menuName }}
-                            </h2>
-                            <h2 class="text-sm text-gray-500 mt-3 ml-2">소개: {{ selectedMenu.info }}</h2>
-                            <div class="mt-4">
-                                <div class="text-sm text-gray-500">
-                                    <h3>옵션 선택</h3>
-                                    <ul>
-                                        <li v-for="optionGroup in optionGroups" :key="optionGroup.optionGroupid">
-                                            <br>
-                                            {{ optionGroup.optionGroupName }}
-                                            <ul>
-                                                <li v-for="option in optionGroup.options" :key="option.optionId">
-                                                    <input type="checkbox" v-model="selectedMenuOptions[option.optionId]"
-                                                        @change="handleCheckboxChange($event, option.price)" />
-                                                    {{ option.optionName }}: {{ option.price }}
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                            </p>
+                            <p class="bg-white text-xl text-gray-700 pb-5 pt-5 pl-3">소개: {{ selectedMenu.info }}</p>
+                            <div class="">
+                                <ul>
+                                    <li v-for="optionGroup in optionGroups" :key="optionGroup.optionGroupid" class="bg-white border border-gray-300 mt-1">
+                                        <p class="mb-1 border-b-2 border-gray-200 pb-3 pt-3 pl-3 text-black text-md font-bold">{{ optionGroup.optionGroupName }}</p>
+                                        <ul>
+                                            <li v-for="option in optionGroup.options" :key="option.optionId" class="flex justify-between items-center pr-3 pl-3 pb-3 pt-3 text-black text-sm">
+                                                {{ option.optionName }}: {{ option.price }} 원
+                                                <input type="checkbox" v-model="selectedMenuOptions[option.optionId]"
+                                                    @change="handleCheckboxChange($event, option.price)" />
+                                                
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-1 bg-white pl-2 pt-5 pb-8 text-black font-bold">
+                                <div class=" mb-3">
+                                    주문 수량: <input type="number" v-model="selectedMenu.quantity" min="1"
+                                        @change="handleQuantityChange" style="width: 60px;" class="border-2 border-gray-900 text-center"/>
                                 </div>
-                            </div>
-                            <div class="mt-5">
-                                주문 수량: <input type="number" v-model="selectedMenu.quantity" min="1"
-                                    @change="handleQuantityChange" style="width: 60px;" />
-                            </div>
-                            <div class="mt-5">
-                                총 주문 금액: {{ totalPrice }}원
+                                <div>
+                                    총 주문 금액: {{ totalPrice }}원
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse bg-white">
                         <button v-if="status === 'OPEN'" @click="addCart"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                             장바구니 담기
@@ -134,6 +133,13 @@ export default {
             }
         },
         async addCart() {
+            const selectedStoreId = localStorage.getItem('storeId');
+            if (!(selectedStoreId == 0 || !selectedStoreId)){
+                if (this.selectedMenu.storeId != selectedStoreId){
+                    alert("동일한 가게에서만 주문이 가능합니다.");
+                    return;
+                }
+            }
             const options = Object.keys(this.selectedMenuOptions)
                 .filter(key => this.selectedMenuOptions[key] === true)
                 .map(key => parseInt(key));
@@ -153,13 +159,13 @@ export default {
                 const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/stores/${this.storeId}/options`, params, {headers});
                 console.log(response);
                 const orderInfo = {
-                    menuId: this.selectedMenu.menuId,
-                    storeId: this.storeId,
-                    menuName: this.selectedMenu.menuName,
-                    menuPrice: this.selectedMenu.price,
-                    menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
-                    totalPrice: this.totalPrice,
-                    selectedMenuOptions: response.data.result,
+                        menuId: this.selectedMenu.menuId,
+                        storeId: this.storeId,
+                        menuName: this.selectedMenu.menuName,
+                        menuPrice: this.selectedMenu.price,
+                        menuQuantity: this.selectedMenu.quantity, // 선택한 메뉴 수량
+                        totalPrice: this.totalPrice,
+                        selectedMenuOptions: response.data.result,
                 };
                 console.log(orderInfo);
 

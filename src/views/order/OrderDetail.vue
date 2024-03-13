@@ -20,7 +20,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from 'vuex';
 import axios from 'axios';
@@ -78,9 +77,7 @@ export default {
     },
   }
 }
-
 </script>
-
 <style scoped>
 form {
   width: 100%;

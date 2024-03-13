@@ -17,9 +17,9 @@
         <div class="mt-4 flex w-full items-center justify-end space-x-4">
           <a href="/sign-up-user" class="text-sm text-gray-600 hover:underline text-left">회원가입</a>
           <span class="text-sm text-gray-600">|</span>
-          <a href="#" class="text-sm text-gray-600 hover:underline">아이디 찾기</a>
+          <a href="/find-email" class="text-sm text-gray-600 hover:underline">이메일 찾기</a>
           <span class="text-sm text-gray-600">|</span>
-          <a href="#" class="text-sm text-gray-600 hover:underline">비밀번호 찾기</a>
+          <a @click="findPassword" class="text-sm text-gray-600 hover:underline">비밀번호 찾기</a>
         </div>
       </form>
     </div>
@@ -39,6 +39,7 @@ export default {
             email: '',
             password: '',
             eventSource: null, // 이벤트 소스 객체
+            showEmailPopup: false,
         }
     },
     methods: {
@@ -92,6 +93,9 @@ export default {
             } catch(error){
                 alert(error.response.data.message); 
             }
+        },
+        findPassword(){
+          alert("응~ 못찾아~(ಠ‿↼)");
         }
     },
 }
