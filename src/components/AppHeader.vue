@@ -35,6 +35,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { EventSourcePolyfill } from 'event-source-polyfill';
+import { useToast } from "vue-toastification";
+import ToastMessage from './ToastMessage.vue';
 export default {
     computed: {
         ...mapGetters(['getTotalQuantity'])
@@ -44,12 +47,22 @@ export default {
             isLogin: false,
             userRole: null,
             notifCount: 0, // 알림 카운터
+            sse: null,
         }
     },
+
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
+
     created() {
         if (localStorage.getItem("token")) {
             this.isLogin = true;
             this.userRole = localStorage.getItem("role");
+            if (!localStorage.getItem("sse") || this.sse == false) {
+                this.connectToSSE();
+            }
         }
     },
     methods: {
@@ -66,6 +79,52 @@ export default {
             } else {
                 this.$router.push({ name: 'MyInfoOwner' });
             }
+        },
+        // 알림 sse
+        connectToSSE() {
+            this.sse = true;
+            localStorage.setItem("sse", this.sse);
+            const token = localStorage.getItem('token');
+            let lastEventId = localStorage.getItem('lastEventId') || '';
+            const url = `${process.env.VUE_APP_API_BASE_URL}/subscribe`;
+            const eventSourceInitDict = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Last-Event-ID': lastEventId,
+                    'Content-Type': 'text/event-stream',
+                    'Cache-Control': 'no-cache',
+                    'Connection': 'keep-alive',
+                    'X-Accel-Buffering': 'no',
+                    heartbeatTimeout: 120000,
+                },
+            };
+            this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
+            this.eventSource.onmessage = (event) => {
+                this.notify(JSON.stringify(event.data)); // 이벤트 데이터를 notify 함수로 전달
+                // console.log(event.data);
+                // console.log("Json 형변환 " + JSON.stringify(event.data));
+                // alert(event.data);
+            }
+            this.eventSource.onerror = (error) => {
+                console.log(error);
+                this.sse = false;
+                this.eventSource.close();
+            };
+        },
+        notify(eventData) {
+            if (!eventData.includes("EventStream Created")) {
+                this.toast({
+                    component: ToastMessage,
+                    props: { store: eventData},
+                    options: { timeout: false }
+                });
+                console.log(eventData); // 문자열이 포함되어 있으면 true 출력
+            } else if (eventData.includes("EventStream Created")) {
+                this.toast.success(localStorage.getItem('email') + "님 환영합니다.", { timeout: 3000 });
+                console.log("로그인" + eventData);
+            }
+
+
         },
     }
 }
