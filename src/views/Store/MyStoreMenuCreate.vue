@@ -3,27 +3,29 @@
     <button @click="openModal" class="bg-blue-500 text-white py-2 px-4 rounded">메뉴 등록</button>
     <!-- 메뉴 리스트 -->
     <div class="menu-list">
-      <div v-for="menu in menus" :key="menu.menuId" class="card">
-        <div @click="toggleOptions(menu.menuId)" style="cursor: pointer"
-          class="card-body flex mb-2 border-b-4 relative">
-          <img :src="menu.imageUrl" class="card-img-top w-[100px] h-[100px] mr-4 mb-2" />
-          <div>
-            <h5 class="card-title">{{ menu.menuName }}</h5>
-            <p class="card-text">{{ menu.info }}</p>
-            <p class="card-text"><strong>{{ menu.price }}원</strong></p>
+      <div v-for="menu in menus" :key="menu.menuId" class="card ">
+        <div @click="toggleOptions(menu.menuId)" style="cursor: pointer" class="card-body flex flex-col mt-2 mb-2 border-b-4 relative">
+          <div class="flex mb-3">
+            <img :src="menu.imageUrl" class="card-img-top w-[100px] h-[100px] mr-4 mb-2" />
+            <div>
+              <p class="text-lg font-bold text-gray-800 mb-2">메뉴 이름 : {{ menu.menuName }}</p>
+              <p class="text-md text-gray-800 mb-1">메뉴 설명 : {{ menu.info }}</p>
+              <p class="text-md text-gray-800 mb-1">금액 : {{ menu.price }}원</p>
+            </div>
           </div>
-          <div v-if="visibleOptions.has(menu.menuId)" class="options-container">
-            <div v-for="optionGroup in menu.optionGroups" :key="optionGroup.optionGroupId" class="option-group">
+          <div v-if="visibleOptions.has(menu.menuId)" class="flex flex-col">
+            <div v-for="optionGroup in menu.optionGroups" :key="optionGroup.optionGroupId" class="mt-1 p-3 border-2 rounded-md block text-md font-bold text-gray-800">
               {{ optionGroup.optionGroupName }}
-              <p v-for="option in optionGroup.options" :key="option.optionId" class="option">
-                {{ option.optionName }} : {{ option.price }} 원
-              </p>
+              <div class="mt-2">
+                <p v-for="option in optionGroup.options" :key="option.optionId" class="mb-1 text-sm text-left text-gray-600 rounded-md">
+                  {{ option.optionName }} : {{ option.price }} 원
+                </p>
+              </div>
             </div>
           </div>
 
           <!-- 옵션 추가 버튼 -->
-          <button @click="openOptionModal(menu)"
-            class="bg-green-500 text-white py-2 px-4 rounded absolute top-0 right-0 mt-2">옵션 추가</button>
+          <button @click="openOptionModal(menu)" class="bg-green-500 text-white py-2 px-4 rounded absolute top-0 right-0 mt-2">옵션 추가</button>
         </div>
       </div>
     </div>
@@ -36,9 +38,9 @@
             class="hover:bg-gray-500 hover:text-white text-gray-500 py-1 px-2 rounded ml-2">X</button>
         </div>
         <label for="name" class="block mb-2">메뉴명:</label>
-        <input type="text" id="name" v-model="name" class="w-full mb-4 p-2 border border-gray-300 rounded-md" />
+        <input type="text" maxlength="10" id="name" v-model="name" class="w-full mb-4 p-2 border border-gray-300 rounded-md" />
         <label for="menuInfo" class="block mb-2">메뉴 소개:</label>
-        <textarea id="menuInfo" v-model="menuInfo" class="w-full mb-4 p-2 border border-gray-300 rounded-md"></textarea>
+        <input type="text" maxlength="30" id="menuInfo" v-model="menuInfo" class="w-full mb-4 p-2 border border-gray-300 rounded-md">
         <label for="price" class="block mb-2">가격:</label>
         <input type="text" id="price" v-model="price" class="w-full mb-4 p-2 border border-gray-300 rounded-md" />
         <label for="image" class="block mb-2">메뉴 이미지</label>
