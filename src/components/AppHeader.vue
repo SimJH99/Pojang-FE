@@ -118,11 +118,11 @@ export default {
             //     // console.log("Json 형변환 " + JSON.stringify(event.data));
             //     // alert(event.data);
             // }
-            sseObj.onerror = (error) => {
-                console.log(error);
-                this.sse = false;
-                sseObj.close();
-            };
+            // sseObj.onerror = (error) => {
+            //     console.log(error);
+            //     this.sse = false;
+            //     sseObj.close();
+            // };
         },
         notify(eventData) {
             if (!eventData.includes("EventStream Created")) {
