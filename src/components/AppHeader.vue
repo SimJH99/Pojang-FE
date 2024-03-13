@@ -118,10 +118,10 @@ export default {
             //     // console.log("Json 형변환 " + JSON.stringify(event.data));
             //     // alert(event.data);
             // }
-            this.eventSource.onerror = (error) => {
+            sseObj.onerror = (error) => {
                 console.log(error);
                 this.sse = false;
-                this.eventSource.close();
+                sseObj.close();
             };
         },
         notify(eventData) {
