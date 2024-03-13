@@ -21,10 +21,33 @@ export default createStore({
     mutations: {
         addToCart(state, orderInfo){
             console.log("mutations 진입!");
+            // const sameMenus = state.cartMenus.filter(m => m.menuId == orderInfo.menuId);
             const existOrderInfo = state.cartMenus.find(m => m.menuId == orderInfo.menuId);
+            console.log("cartMenus: " + JSON.stringify(existOrderInfo));
             if (existOrderInfo){
+                // const existOptions = existOrderInfo.selectedMenuOptions;
+                // const options = orderInfo.selectedMenuOptions;
+                // const existOptions = existOrderInfo.selectedMenuOptions.sort((a, b) => a.id - b.id);
+                // const options = orderInfo.selectedMenuOptions.sort((a, b) => a.id - b.id);
                 existOrderInfo.menuQuantity += orderInfo.menuQuantity;
                 existOrderInfo.totalPrice += orderInfo.totalPrice;
+                // let count = 0;
+                // for (const existOption in existOptions) {
+                //     for (const option in options){
+                //         if (existOption.id == option.id) {
+                //             count++;
+                //             break;
+                //         }
+                //     }
+                // }
+                // console.log("count: " + count);
+                // console.log("options length: " + options.length);
+                // if (count == options.length){
+                //     existOrderInfo.menuQuantity += orderInfo.menuQuantity;
+                //     existOrderInfo.totalPrice += orderInfo.totalPrice;
+                // } else {
+                //     state.cartMenus.push(orderInfo);
+                // }
             } else {
                 state.cartMenus.push(orderInfo);
             }
