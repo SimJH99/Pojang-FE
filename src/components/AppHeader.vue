@@ -91,25 +91,38 @@ export default {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Last-Event-ID': lastEventId,
-                    'Content-Type': 'text/event-stream',
-                    'Cache-Control': 'no-cache',
-                    'Connection': 'keep-alive',
-                    'X-Accel-Buffering': 'no',
-                    heartbeatTimeout: 120000,
+                    // 'Content-Type': 'text/event-stream',
+                    // 'Cache-Control': 'no-cache',
+                    // 'Connection': 'keep-alive',
+                    // 'X-Accel-Buffering': 'no',
+                    // heartbeatTimeout: 120000,
                 },
             };
-            this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
-            this.eventSource.onmessage = (event) => {
-                this.notify(JSON.stringify(event.data)); // 이벤트 데이터를 notify 함수로 전달
-                // console.log(event.data);
-                // console.log("Json 형변환 " + JSON.stringify(event.data));
-                // alert(event.data);
-            }
-            this.eventSource.onerror = (error) => {
-                console.log(error);
-                this.sse = false;
-                this.eventSource.close();
-            };
+            // this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
+            var sseObj = new EventSourcePolyfill(url, eventSourceInitDict);
+            sseObj.addEventListener('connect', (event) => {
+                console.log(event.data);
+                this.toast.success(localStorage.getItem('email') + "님 환영합니다.", { timeout: 3000 });
+            });
+            sseObj.addEventListener('sendToOwner', (event) => {
+                const obj = JSON.parse(event.data);
+                this.toast({
+                    component: ToastMessage,
+                    props: { store: obj},
+                    options: { timeout: false }
+                });
+            });
+            // this.eventSource.onmessage = (event) => {
+            //     this.notify(JSON.stringify(event.data)); // 이벤트 데이터를 notify 함수로 전달
+            //     // console.log(event.data);
+            //     // console.log("Json 형변환 " + JSON.stringify(event.data));
+            //     // alert(event.data);
+            // }
+            // this.eventSource.onerror = (error) => {
+            //     console.log(error);
+            //     this.sse = false;
+            //     this.eventSource.close();
+            // };
         },
         notify(eventData) {
             if (!eventData.includes("EventStream Created")) {
