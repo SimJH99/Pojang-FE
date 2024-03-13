@@ -91,11 +91,11 @@ export default {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Last-Event-ID': lastEventId,
-                    // 'Content-Type': 'text/event-stream',
-                    // 'Cache-Control': 'no-cache',
-                    // 'Connection': 'keep-alive',
-                    // 'X-Accel-Buffering': 'no',
-                    // heartbeatTimeout: 120000,
+                    'Content-Type': 'text/event-stream',
+                    'Cache-Control': 'no-cache',
+                    'Connection': 'keep-alive',
+                    'X-Accel-Buffering': 'no',
+                    heartbeatTimeout: 120000,
                 },
             };
             // this.eventSource = new EventSourcePolyfill(url, eventSourceInitDict);
@@ -118,11 +118,11 @@ export default {
             //     // console.log("Json 형변환 " + JSON.stringify(event.data));
             //     // alert(event.data);
             // }
-            // this.eventSource.onerror = (error) => {
-            //     console.log(error);
-            //     this.sse = false;
-            //     this.eventSource.close();
-            // };
+            this.eventSource.onerror = (error) => {
+                console.log(error);
+                this.sse = false;
+                this.eventSource.close();
+            };
         },
         notify(eventData) {
             if (!eventData.includes("EventStream Created")) {
