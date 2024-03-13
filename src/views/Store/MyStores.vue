@@ -57,13 +57,13 @@ export default {
     this.fetchOrders();
   },
   mounted(){
-    this.connectToSSE(); // SSE 연결
+    // this.connectToSSE(); // SSE 연결
   },
   beforeUnmount() {
     // 컴포넌트 해제 전에 SSE 연결 종료
-    if (this.eventSource) {
-      this.eventSource.close();
-    }
+    // if (this.eventSource) {
+    //   this.eventSource.close();
+    // }
   },
   methods: {
     components:{
